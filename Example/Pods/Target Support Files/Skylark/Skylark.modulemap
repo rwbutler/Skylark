@@ -1,0 +1,6 @@
+framework module Skylark {
+  umbrella header "Skylark-umbrella.h"
+
+  export *
+  module * { export * }
+}

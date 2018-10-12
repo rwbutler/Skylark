@@ -1,0 +1,135 @@
+{
+    "buttons": {
+        "existence": [
+            "$PARAMETER is displayed",
+            "$PARAMETER is shown",
+            "the $PARAMETER button is displayed",
+            "the $PARAMETER button is shown",
+            "the $PARAMETER is displayed",
+            "the $PARAMETER is shown",
+            "a $PARAMETER button is displayed",
+            "a $PARAMETER button is shown"
+        ],
+        "interaction": [
+            "i tap $PARAMETER",
+            "i tap the $PARAMETER",
+            "i tap the $PARAMETER icon",
+            "i tap the $PARAMETER button",
+            "i tap the $PARAMETER link",
+            "the $PARAMETER button is tapped",
+            "the $PARAMETER is tapped",
+            "$PARAMETER is tapped"
+        ]
+    },
+    "cells": {
+        "existence": [
+            "the $PARAMETER cell is shown",
+            "the $PARAMETER cell is displayed",
+            "the $PARAMETER category is displayed",
+            "the $PARAMETER subcategory is displayed"
+        ],
+        "interaction": [
+            "i tap $PARAMETER cell",
+            "i tap the $PARAMETER cell",
+            "i press the $PARAMETER cell",
+            "i touch the $PARAMETER cell",
+            "the $PARAMETER cell is touched",
+            "the $PARAMETER cell is tapped",
+             "the $PARAMETER cell is pressed",
+            "i tap the $PARAMETER category",
+            "i tap the $PARAMETER subcategory"
+        ]
+    },
+    "elements": {
+        "existence": [
+            "$PARAMETER is displayed",
+            "$PARAMETER is shown",
+            "the $PARAMETER element is displayed",
+            "the $PARAMETER element is shown",
+            "the $PARAMETER is displayed",
+            "the $PARAMETER is shown"
+        ],
+        "interaction": [
+            "i tap $PARAMETER",
+            "i tap the $PARAMETER",
+            "i tap the $PARAMETER element",
+            "the $PARAMETER element is tapped",
+            "the $PARAMETER is tapped",
+            "$PARAMETER is tapped"
+        ]
+    },
+    "keyboards": {
+        "existence": [
+            "keyboard is displayed",
+            "keyboard is shown",
+            "the keyboard is displayed",
+            "the keyboard is shown",
+            "the keyboard is active"
+        ]
+    },
+    "pages": {
+        "existence": [
+            "i navigate to the $PARAMETER page",
+            "i navigate to the $PARAMETER screen",
+            "i navigate to the $PARAMETERpage",
+            "i am on the $PARAMETERpage",
+            "i am on the $PARAMETER page",
+            "i am on $PARAMETER",
+            "the $PARAMETER is displayed",
+            "the $PARAMETER page is displayed",
+            "the $PARAMETERpage is displayed",
+            "the $PARAMETER is shown",
+            "the $PARAMETER page is shown",
+            "the $PARAMETERpage is shown",
+            "i am on the $PARAMETER screen",
+            "i am on $PARAMETER screen"
+        ]
+    },
+    "tabs": {
+        "interaction": [
+            "i tap the $PARAMETER menu link",
+            "i tap the $PARAMETER menu",
+            "i tap the $PARAMETER tab",
+            "i navigate to the $PARAMETER menu link",
+            "i navigate to the $PARAMETER menu"
+        ]
+    },
+    "text": {
+        "existence": [
+            "$PARAMETER is displayed",
+            "$PARAMETER is shown",
+            "the $PARAMETER field is displayed",
+            "the $PARAMETER field is shown",
+            "the $PARAMETER is displayed",
+            "the $PARAMETER is shown"
+        ]
+    },
+    "text-fields": {
+        "existence": [
+            "$PARAMETER is displayed",
+            "$PARAMETER is shown",
+            "the $PARAMETER field is displayed",
+            "the $PARAMETER field is shown",
+            "the $PARAMETER is displayed",
+            "the $PARAMETER is shown"
+        ],
+        "interaction": [
+            "i tap $PARAMETER",
+            "i tap the $PARAMETER",
+            "i tap the $PARAMETER field",
+            "the $PARAMETER field is tapped",
+            "the $PARAMETER is tapped",
+            "$PARAMETER is tapped",
+            "the $PARAMETER is active",
+            "the $PARAMETER field is active"
+        ]
+    },
+    "web-views": {
+        "existence": [
+            "$PARAMETER is displayed",
+            "$PARAMETER is shown",
+            "the $PARAMETER is displayed",
+            "the $PARAMETER is shown"
+        ]
+    }
+}

@@ -1,0 +1,6 @@
+framework module Pods_Skylark_Example {
+  umbrella header "Pods-Skylark_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

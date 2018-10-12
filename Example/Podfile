@@ -1,0 +1,9 @@
+use_frameworks!
+
+target 'Skylark_Example' do
+  pod 'Skylark', :path => '../'
+
+  target 'Skylark_ExampleUITests' do
+        inherit! :search_paths
+  end
+end

@@ -1,5 +1,5 @@
 //
-//  ExamplesParser.swift
+//  ScenarioOutlineParser.swift
 //  Skylark
 //
 //  Created by Ross Butler on 10/1/18.
@@ -11,14 +11,27 @@ struct ScenarioOutlineParser {
     func scenariosWithExampleSubstitutions(scenario: String, outline: ScenarioOutline = .outline) -> [String] {
         guard let examplesText = examples(scenario: scenario) else { return [] }
         let examplesTextRows = examplesText.split(separator: "\n")
-        let rows = examplesTextRows.map({ $0.split(separator: "|").map({ String($0) })})
+        let rows: [[String]] = examplesTextRows.compactMap({ row in
+            guard let firstPipeIndex = row.firstIndex(of: "|"),
+                let lastPipeIndex = row.lastIndex(of: "|") else { return nil }
+            let startIndex = row.index(after: firstPipeIndex)
+            let trimmedRow = row[startIndex..<lastPipeIndex].trimmingCharacters(in: .whitespacesAndNewlines)
+            let columns = trimmedRow.split(separator: "|")
+            // Map String.SubSequences to Strings
+            return columns.map({ String($0) })
+        })
+        
+        // Remove examples table from the template to be parameterized
+        var scenarioTemplate = scenario.replacingOccurrences(of: examplesText, with: "")
+        scenarioTemplate = scenarioTemplate.replacingOccurrences(of: "examples:", with: "")
+        
         switch outline {
         case .outline:
             guard let keys = rows.first else { return [] }
-            let parameterMaps = rows.dropFirst().map({ row in
+            let parameterMaps: [[String: String]] = rows.dropFirst().map({ row in
                 return parameterSet(keys: keys, values: row)
             })
-            return scenarios(template: scenario, parameterMaps: parameterMaps)
+            return scenarios(template: scenarioTemplate, parameterMaps: parameterMaps)
         case .permutations:
             let examplesColumns = columns(rows: rows)
              let parameterReplacementsMap: [String: [String]] = Dictionary(examplesColumns.compactMap({ column in
@@ -26,7 +39,7 @@ struct ScenarioOutlineParser {
              return (key, Array(column.dropFirst()))
              }))
              let parameterMaps = permutations(parameterMap: parameterReplacementsMap)
-            return scenarios(template: scenario, parameterMaps: parameterMaps)
+            return scenarios(template: scenarioTemplate, parameterMaps: parameterMaps)
         }
     }
 }
@@ -60,7 +73,7 @@ private extension ScenarioOutlineParser {
         
         if let examplesMatch = examplesRegEx.firstMatch(in: scenario, options: [], range: scenarioRange) {
             let examplesStr = (scenario as NSString).substring(with: examplesMatch.range)
-            return examplesStr.replacingOccurrences(of: " ", with: "")
+            return examplesStr
         }
         return nil
     }

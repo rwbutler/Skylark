@@ -46,13 +46,13 @@ extension SkylarkResult: CustomStringConvertible {
             summary.append(" (")
         }
         if scenariosFailed > 0 {
-            summaryComponents.append("\(scenariosFailed) failed")
+            summaryComponents.append("\(scenariosFailed) failed ❌")
         }
         if scenariosFlaky > 0 {
-            summaryComponents.append("\(scenariosFlaky) flaky")
+            summaryComponents.append("\(scenariosFlaky) flaky ⚠️")
         }
         if scenariosPassed > 0 {
-            summaryComponents.append("\(scenariosPassed) passed")
+            summaryComponents.append("\(scenariosPassed) passed ✅")
         }
         if scenariosExecuted > 0 {
             summary += summaryComponents.joined(separator: ", ")

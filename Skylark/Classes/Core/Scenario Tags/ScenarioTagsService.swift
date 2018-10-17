@@ -128,7 +128,7 @@ private extension ScenarioTagsService {
 
     /// Decides whether or not a scenario with the specified tags should execute given the
     private func shouldExecuteScenario(tagExpression: String, scenarioTags: [String]) -> Bool {
-        if let condition = complexEvaluable(from: tagExpression, scenarioTags: scenarioTags) {
+        if let condition = complexEvaluable(from: tagExpression.lowercased(), scenarioTags: scenarioTags) {
             return condition.evaluate()
         }
         // Warning: Unable to parse the expression (should have guarded against this with conditional intializer).

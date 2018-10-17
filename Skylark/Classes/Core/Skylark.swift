@@ -148,7 +148,7 @@ public class Skylark {
                     break
                 }
             } else {
-                XCTAssert(false, "No matching step found for \(sanitisedStep).")
+                 XCTAssert(false, "No matching step found for \(sanitisedStep).")
                 return nil
             }
         }
@@ -195,6 +195,10 @@ public class Skylark {
     /// Executes the scenarios in the specified file
     public func test(featureFile fileName: String, launchArguments: [String] = []) {
         launch = launchRoutine(launchArguments: launchArguments)
+        let parsedLaunchArgs = launchArguments.compactMap({ LaunchArguments(rawValue: $0) })
+        if !parsedLaunchArgs.contains(where: { $0 == .resetBeforeEachScenario }) {
+            launch()
+        }
         var featureFileURL: URL?
         let featureExtension: String = "\(FileExtension.feature)"
         for aBundle in Bundle.allBundles {
@@ -235,14 +239,10 @@ public class Skylark {
         
         // Iterate scenarios, converting each to an evaluable to execute the test
         for scenarioText in scenarios where shouldExecuteScenario(scenario: scenarioText) {
-            if let startIndex = scenarioText.range(of: "given")?.lowerBound {
-                let stepsText = String(scenarioText[startIndex..<scenarioText.endIndex])
-                launch()
-                let scenarios = parameterisedScenarios(scenarioText: stepsText)
+                let scenarios = parameterisedScenarios(scenarioText: scenarioText)
                 scenariosToEvaluate.append(contentsOf: scenarios)
-            }
         }
-        let result = evaluate(scenarios: scenariosToEvaluate)
+        let result = evaluate(scenarios: scenariosToEvaluate, launchArgs: parsedLaunchArgs)
         for failedScenario in result.flakyScenarios {
             print("The following scenario failed:\n\n\(String(describing: failedScenario.scenarioText))")
         }
@@ -264,9 +264,9 @@ public class Skylark {
     
     /// Executes the specified scenario
     public func test(scenario scenarioText: String, reset: Bool = false) {
-        launch()
-        let scenarios = parameterisedScenarios(scenarioText: scenarioText)
-        let result = evaluate(scenarios: scenarios)
+        let launchArguments: [LaunchArguments] = [.resetBeforeEachScenario]
+        let scenarios = parameterisedScenarios(scenarioText: scenarioText.lowercased())
+        let result = evaluate(scenarios: scenarios, launchArgs: launchArguments)
         for failedScenario in result.flakyScenarios {
            print("The following scenario failed:\n\n\(String(describing: failedScenario.scenarioText))")
         }
@@ -282,37 +282,55 @@ private extension Skylark {
     func parameterisedScenarios(scenarioText: String) -> [Scenario] {
         let parser = ScenarioOutlineParser()
         var result: [Scenario] = []
+        guard let startIndex = scenarioText.range(of: "given")?.lowerBound else {
+            return result
+        }
+        let stepsText = String(scenarioText[startIndex..<scenarioText.endIndex])
         if scenarioText.lowercased().contains("scenario outline:")
             || scenarioText.lowercased().contains("scenario template:") {
-            let scenarios = parser.scenariosWithExampleSubstitutions(scenario: scenarioText, outline: .outline)
-            let evaluableScenarios = scenarios.compactMap({ scenario(text: $0) })
+            let scenarios = parser.scenariosWithExampleSubstitutions(scenario: stepsText, outline: .outline)
+            let evaluableScenarios: [Scenario] = scenarios.compactMap({ parameterizedScenarioText in
+                let trimmedScenarioText = parameterizedScenarioText.trimmingCharacters(in: .whitespacesAndNewlines)
+                return scenario(text: trimmedScenarioText)
+            })
             result.append(contentsOf: evaluableScenarios)
         } else if scenarioText.lowercased().contains("scenario permutations:") {
-            let scenarios = parser.scenariosWithExampleSubstitutions(scenario: scenarioText, outline: .permutations)
-            let evaluableScenarios = scenarios.compactMap({ scenario(text: $0) })
+            let scenarios = parser.scenariosWithExampleSubstitutions(scenario: stepsText, outline: .permutations)
+            let evaluableScenarios: [Scenario] = scenarios.compactMap({ parameterizedScenarioText in
+                let trimmedScenarioText = parameterizedScenarioText.trimmingCharacters(in: .whitespacesAndNewlines)
+                return scenario(text: trimmedScenarioText)
+            })
             result.append(contentsOf: evaluableScenarios)
-        } else if let evaluableScenario = scenario(text: scenarioText) {
+        } else if let evaluableScenario = scenario(text: stepsText) {
             result.append(evaluableScenario)
         }
         return result
     }
     
     /// Evaluates whether the specified scenarios passed
-    func evaluate(scenarios: [Scenario]) -> SkylarkResult {
+    func evaluate(scenarios: [Scenario], launchArgs: [LaunchArguments]) -> SkylarkResult {
         var scenariosPassed: [Scenario] = []
         var scenariosFailed: [Scenario] = []
         var scenariosFlaky: [Scenario] = []
         
         for scenario in scenarios {
+            guard let scenarioText = scenario.scenarioText else { continue }
+            print("Testing scenario...\n\(String(describing: scenarioText))\n\n")
+            if launchArgs.contains(where: { $0 == .resetBeforeEachScenario }) {
+                launch()
+            }
             let firstRunResult = scenario.evaluate()
             guard !firstRunResult else {
+                print("\nScenario passed ✅\n\n")
                 scenariosPassed.append(scenario)
                 continue
             }
             // Test failed - retry the specified number of times
             var retryResults: [Bool] = []
             for _ in 0..<retryFailingScenariosCount {
-                launch()
+                if launchArgs.contains(where: { $0 == .resetBeforeEachScenario }) {
+                    launch()
+                }
                 retryResults.append(scenario.evaluate())
             }
             let numberRequiredSuccesses: Int = Int((Double(retryResults.count) / Double(2.0)).rounded(.up))
@@ -320,8 +338,10 @@ private extension Skylark {
             
             let passed = numberRequiredSuccesses <= numberOfSuccesses
             if passed {
+                print("Scenario flaky ⚠️\n\n")
                 scenariosFlaky.append(scenario)
             } else {
+                print("Scenario failed ❌\n\n")
                 scenariosFailed.append(scenario)
             }
         }
@@ -349,47 +369,94 @@ private extension Skylark {
     
     /// Registers page step definitions
     private func registerStepDefinitionsForPage(page: Page, stepDefinitions: [String]) {
-        let isDisplayedBlock: () -> Void = {
-            
+        let isDisplayedBlock: () -> Bool = {
+            var elementDisplayedResult: [Bool] = []
             for elementType in page.elements.keys {
-                for elementOfType in page.elements[elementType]! {
-                    let element = elementType.xcuiElement[elementOfType.value]
-                    element.scrollToElement()
+                guard let elementsOfType = page.elements[elementType] else { continue }
+                for elementOfType in elementsOfType {
+                    let query = elementType.xcuiElement
+                    var element = query[elementOfType.value]
+                    
+                    switch elementType {
+                    case .cells:
+                        element.scrollToCell()
+                    case .text:
+                        let predicate = NSPredicate(format: "label CONTAINS[cd] '\(elementOfType.value)'")
+                        element = query.matching(predicate).firstMatch
+                    default:
+                        element.scrollToElement()
+                    }
+
                     let exists = (elementType == .navigationBars )
                         ? NSPredicate(format: "identifier LIKE '\(elementOfType.value)'")
                         : NSPredicate(format: "exists == YES")
-                    self.testCase?.expectation(for: exists, evaluatedWith: element, handler: nil)
-                    self.testCase?.waitForExpectations(timeout: self.timeout, handler: nil)
+                    
+                    if let expectation = self.testCase?.expectation(for: exists, evaluatedWith: element, handler: nil) {
+                        self.testCase?.wait(for: [expectation], timeout: self.timeout, enforceOrder: true)
+                    }
+                    
+                    elementDisplayedResult.append(element.exists)
                 }
             }
+            let overallResult = elementDisplayedResult.reduce(true, { (previousResult, nextResult) -> Bool in
+                return previousResult && nextResult
+            })
+            return overallResult
         }
         for stepDefinition in stepDefinitions {
             let parameterisedStep = stepDefinition.replacingOccurrences(of: "$PARAMETER", with: page.name.lowercased())
-            register(step: parameterisedStep, block: isDisplayedBlock)
+            registerFunction(for: parameterisedStep, function: isDisplayedBlock)
         }
     }
     
     // Register steps for screen elements
     func registerStepsForElements(for element: (key: String, value: String), page: String? = nil,
-                                  query: XCUIElementQuery, stepDefinitions: [String: [String]]) {
-        let isDisplayedBlock: () -> Void = {
-            let elem = query[element.value]
-            elem.scrollToElement()
+                                  elementType: SupportedElementType, stepDefinitions: [String: [String]]) {
+        let query = elementType.xcuiElement
+        let isDisplayedBlock: () -> Bool = {
+            var elem = query[element.value]
+            
+            switch elementType {
+            case .cells:
+                elem.scrollToCell()
+            case .text:
+                let predicate = NSPredicate(format: "label CONTAINS[cd] '\(element.value)'")
+                elem = query.matching(predicate).firstMatch
+            default:
+                elem.scrollToElement()
+            }
+            
+            if elementType == SupportedElementType.cells {
+                elem.scrollToCell()
+            } else {
+                elem.scrollToElement()
+            }
+           
             let exists = (query == XCUIApplication().navigationBars)
                 ? NSPredicate(format: "identifier LIKE '\(element.value)'")
                 : NSPredicate(format: "exists == YES")
-            self.testCase?.expectation(for: exists, evaluatedWith: elem, handler: nil)
-            self.testCase?.waitForExpectations(timeout: self.timeout, handler: nil)
+            
+            if let expectation = self.testCase?.expectation(for: exists, evaluatedWith: elem, handler: nil) {
+                self.testCase?.wait(for: [expectation], timeout: self.timeout, enforceOrder: true)
+            }
+            return elem.exists
         }
         if let existenceSteps = stepDefinitions["existence"] {
             for existenceStep in existenceSteps {
-                register(step: existenceStep.replacingOccurrences(of: "$PARAMETER", with: element.key),
-                         block: isDisplayedBlock)
+                registerFunction(for: existenceStep.replacingOccurrences(of: "$PARAMETER", with: element.key),
+                         function: isDisplayedBlock)
             }
         }
         let tapBlock: () -> Void = {
-            let element = query[element.value]
-            element.tap()
+            var elem = query[element.value]
+            if elementType == .cells {
+                elem.scrollToCell()
+            }
+            if !elem.exists {
+                elem = query[element.value.capitalized]
+            }
+
+            elem.tap()
         }
         if let interactionSteps = stepDefinitions["interaction"] {
             for interactionStep in interactionSteps {
@@ -409,7 +476,7 @@ private extension Skylark {
             switch stepDefinition {
             case .element(let pageName, let element, let xcuiElementQuery, let stepDefinitions):
                 registerStepsForElements(for: element, page: pageName,
-                                         query: xcuiElementQuery, stepDefinitions: stepDefinitions)
+                                         elementType: xcuiElementQuery, stepDefinitions: stepDefinitions)
             case .keyboard(let pageName, let stepDefinitions):
                 registerStepDefinitionsForKeyboard(page: pageName, stepDefinitions: stepDefinitions)
             case .page(let page, let stepDefinitions):

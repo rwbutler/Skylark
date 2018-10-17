@@ -47,7 +47,8 @@
             "the $PARAMETER element is displayed",
             "the $PARAMETER element is shown",
             "the $PARAMETER is displayed",
-            "the $PARAMETER is shown"
+            "the $PARAMETER is shown",
+            "the $PARAMETER category heading is displayed"
         ],
         "interaction": [
             "i tap $PARAMETER",
@@ -101,7 +102,8 @@
             "the $PARAMETER field is displayed",
             "the $PARAMETER field is shown",
             "the $PARAMETER is displayed",
-            "the $PARAMETER is shown"
+            "the $PARAMETER is shown",
+            "the $PARAMETER category heading is displayed"
         ]
     },
     "text-fields": {

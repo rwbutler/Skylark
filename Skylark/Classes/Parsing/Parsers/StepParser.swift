@@ -73,7 +73,7 @@ private extension StepParser {
                     guard let elementsOfType = page.elements[elementType] else { continue }
                     for elementOfType in elementsOfType {
                         stepDefinitions.append(StepDefinitions.element(pageName: page.name, element: elementOfType,
-                                                                       query: elementType.xcuiElement,
+                                                                       query: elementType,
                                                                        stepDefinitions: elementStepDefinitions))
                     }
                 }

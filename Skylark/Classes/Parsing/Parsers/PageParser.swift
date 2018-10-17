@@ -19,6 +19,14 @@ struct PageParser: Parser {
                 jsonFileURLsInOtherBundles.append(contentsOf: jsonFileURLs)
             }
         }
+        
+        guard !jsonFileURLsInOtherBundles.isEmpty else {
+            // Fallback to the current bundle
+            if let jsonFileURLs = urlsForFilesInBundle(bundle, with: .screen) {
+                return jsonFileURLs.compactMap({ pageFromJSONFile(url: $0) })
+            }
+            return nil
+        }
         return jsonFileURLsInOtherBundles.compactMap({ pageFromJSONFile(url: $0) })
     }
     

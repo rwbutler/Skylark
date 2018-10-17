@@ -22,6 +22,7 @@
 		134A80C02162A396004AC117 /* DictionaryAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134A80BF2162A396004AC117 /* DictionaryAdditions.swift */; };
 		134A80D52163799A004AC117 /* ScenarioOutlineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134A80D42163799A004AC117 /* ScenarioOutlineParser.swift */; };
 		134A80D7216379BE004AC117 /* ScenarioOutline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134A80D6216379BE004AC117 /* ScenarioOutline.swift */; };
+		135317B32177471D00D1C141 /* LaunchArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135317B22177471D00D1C141 /* LaunchArguments.swift */; };
 		13C2B92B215A91FB0035F758 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2B92A215A91FB0035F758 /* Page.swift */; };
 		13C2B92F215A92650035F758 /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2B92E215A92650035F758 /* Step.swift */; };
 		13C2B932215A92AE0035F758 /* SimpleStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2B931215A92AE0035F758 /* SimpleStep.swift */; };
@@ -77,6 +78,7 @@
 		134A80BF2162A396004AC117 /* DictionaryAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryAdditions.swift; sourceTree = "<group>"; };
 		134A80D42163799A004AC117 /* ScenarioOutlineParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScenarioOutlineParser.swift; sourceTree = "<group>"; };
 		134A80D6216379BE004AC117 /* ScenarioOutline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioOutline.swift; sourceTree = "<group>"; };
+		135317B22177471D00D1C141 /* LaunchArguments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchArguments.swift; sourceTree = "<group>"; };
 		13C2B92A215A91FB0035F758 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		13C2B92E215A92650035F758 /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
 		13C2B931215A92AE0035F758 /* SimpleStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleStep.swift; sourceTree = "<group>"; };
@@ -255,9 +257,18 @@
 			path = Parsers;
 			sourceTree = "<group>";
 		};
+		135317B12177471D00D1C141 /* Execution */ = {
+			isa = PBXGroup;
+			children = (
+				135317B22177471D00D1C141 /* LaunchArguments.swift */,
+			);
+			path = Execution;
+			sourceTree = "<group>";
+		};
 		13C2B929215A91D00035F758 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				135317B12177471D00D1C141 /* Execution */,
 				134A80A6215CEE37004AC117 /* File */,
 				134A80A4215CEBC8004AC117 /* Parsing */,
 				134A8095215C0896004AC117 /* Gherkin */,
@@ -596,6 +607,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13C2B93E215A9A8A0035F758 /* Skylark.swift in Sources */,
+				135317B32177471D00D1C141 /* LaunchArguments.swift in Sources */,
 				13C2B934215A92CB0035F758 /* AndStep.swift in Sources */,
 				134A80A1215CE789004AC117 /* CompoundStep.swift in Sources */,
 				134A809D215CE52D004AC117 /* Evaluable.swift in Sources */,

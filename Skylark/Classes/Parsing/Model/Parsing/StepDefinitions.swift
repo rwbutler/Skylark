@@ -10,7 +10,7 @@ import XCTest
 
 enum StepDefinitions {
     case element(pageName: String, element: (key: String, value: String),
-        query: XCUIElementQuery, stepDefinitions: [String: [String]])
+        query: SupportedElementType, stepDefinitions: [String: [String]])
     case keyboard(pageName: String, stepDefinitions: [String])
     case page(page: Page, stepDefinitions: [String])
 }

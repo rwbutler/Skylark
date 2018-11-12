@@ -7,4 +7,4 @@
 
 import Foundation
 
-protocol Step: Evaluable { }
+public protocol Step: Evaluable { }

@@ -188,7 +188,7 @@ public class Skylark {
         })
     }
     
-    func register(step: String, evaluable: Step) {
+    public func register(step: String, evaluable: Step) {
         stepTextToEvaluableStep[step.lowercased()] = evaluable
     }
     

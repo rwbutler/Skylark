@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol Evaluable {
+public protocol Evaluable {
     func evaluate() -> Bool
 }

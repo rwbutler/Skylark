@@ -7,9 +7,12 @@
 
 import Foundation
 
-struct NegatedStep: Step {
+public struct NegatedStep: Step {
+    
     let expr: Step
-    func evaluate() -> Bool {
+    
+    public func evaluate() -> Bool {
         return !expr.evaluate()
     }
+    
 }

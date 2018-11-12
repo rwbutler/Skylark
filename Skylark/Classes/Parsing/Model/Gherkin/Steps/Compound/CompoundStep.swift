@@ -7,7 +7,9 @@
 
 import Foundation
 
-protocol CompoundStep: Step {
+public protocol CompoundStep: Step {
+    
     var lhs: Step { get }
     var rhs: Step { get }
+    
 }

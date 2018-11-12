@@ -7,13 +7,16 @@
 
 import Foundation
 
-struct SimpleStep: Step {
+public struct SimpleStep: Step {
+    
     let expr: () -> Bool
-    init(_ expr: @escaping () -> Bool) {
+    
+    public init(_ expr: @escaping () -> Bool) {
         self.expr = expr
     }
 
-    func evaluate() -> Bool {
+    public func evaluate() -> Bool {
         return expr()
     }
+    
 }

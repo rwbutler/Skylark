@@ -24,6 +24,7 @@
 
 To get started import the Skylark and XCTest frameworks into your UI testing target, create an XCTestCase subclass as usual and instantiate an instance of the test runner. Ensure that your feature file has been added to your UI test bundle with the file extension `.feature` then invoke `test(featureFile:)` to run your scenarios.
 
+```swift
     import Foundation
     import Skylark
     import XCTest
@@ -36,17 +37,19 @@ To get started import the Skylark and XCTest frameworks into your UI testing tar
         func testFromFeatureFile() {
             testRunner.test(featureFile: "Main")
         }
-       
     }
+```
 
 Skylark endeavors to limit the amount of additional Swift code you need to write on top of your feature files to get your tests to run. To this end, most existence checks (checking whether an element is displayed onscreen) and interaction checks e.g. tapping buttons will work out of the box. To take advantage of this functionality, simply create a JSON file with the file extension `.screen` describing the elements on a screen e.g.
 
+```json
     {
         "name": "Main",
         "buttons": {
             "Test": "test-button"
         }
     }
+```
 
 In the above the keys are the names of the elements as you would refer to them in your feature files and the values are the accessibility identifiers assigned to your UIKit elements (label text may be used where no accessibility identifier has been assigned).
 
@@ -59,19 +62,19 @@ For steps that require a little more work to set up the test runner provides a n
 
 [CocoaPods](http://cocoapods.org) is a dependency manager which integrates dependencies into your Xcode workspace. To install it using [RubyGems](https://rubygems.org/) run:
 
-```
+```bash
 gem install cocoapods
 ```
 
 To install Skylark using Cocoapods, simply add the following line to your Podfile:
 
-```
+```ruby
 pod "Skylark"
 ```
 
 Then run the command:
 
-```
+```bash
 pod install
 ```
 
@@ -81,14 +84,14 @@ For more information [see here](https://cocoapods.org/#getstarted).
 
 Carthage is a dependency manager which produces a binary for manual integration into your project. It can be installed via [Homebrew](https://brew.sh/) using the commands:
 
-```
+```bash
 brew update
 brew install carthage
 ```
 
 In order to integrate Skylark into your project via Carthage, add the following line to your project's Cartfile:
 
-```
+```ogdl
 github "rwbutler/Skylark"
 ```
 

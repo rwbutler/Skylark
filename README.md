@@ -7,6 +7,11 @@
 [![Platform](https://img.shields.io/cocoapods/p/Skylark.svg?style=flat)](https://cocoapods.org/pods/Skylark)
 [![Swift 4.2](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://swift.org/)
 
+Skylark provides automated acceptance testing for iOS apps by translating feature files written in [Cucumber](https://cucumber.io/) into Xcode UI tests driven by the [XCTest framework](https://developer.apple.com/documentation/xctest).
+
+## ⚠️ Currently Work In Progress 
+Skylark will be available for production use on reaching version 1.0.0.
+
 ## Features
 
 - [x] Execute feature files containing scenarios written using Gherkin

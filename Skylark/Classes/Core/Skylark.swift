@@ -229,9 +229,14 @@ public class Skylark {
         let scenarios = zip(matches, matches.dropFirst().map {
             Optional.some($0) } + [nil]).compactMap { current, next -> String? in
                 let range = current.range(at: 0)
-                let start = String.UTF16Index(encodedOffset: range.location)
-                let end = next.map { $0.range(at: 0) }.map { String.UTF16Index(encodedOffset: $0.location) }
-                    ?? String.UTF16Index(encodedOffset: featureFileContents.utf16.count)
+                let utf16 = featureFileContents.utf16
+                let start = utf16.index(utf16.startIndex, offsetBy: range.location)
+                let end: String.UTF16View.Index
+                if let next = next {
+                    end = utf16.index(utf16.startIndex, offsetBy: next.range(at: 0).location)
+                } else {
+                    end = utf16.index(utf16.startIndex, offsetBy: utf16.count)
+                }
                 return String(featureFileContents.utf16[start..<end])?.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         

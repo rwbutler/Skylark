@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Skylark'
-  s.version          = '0.0.7'
+  s.version          = '0.1.0'
   s.summary          = 'Pure Swift BDD testing framework for writing Cucumber scenarios using Gherkin syntax'
   s.swift_version    = '4.2'
   s.description      = <<-DESC

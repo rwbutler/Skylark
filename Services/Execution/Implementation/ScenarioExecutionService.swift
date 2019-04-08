@@ -52,7 +52,8 @@ class ScenarioExecutionService: ExecutionService {
         if !launchArgs.contains(where: { $0 == .resetBeforeEachScenario }) {
             launch()
         }
-        let scenarioResults: [ScenarioReport] = execute(scenarios: feature.scenarios, additionalTags: feature.tags, retryCount: retryCount)
+        let scenarioResults: [ScenarioReport] = execute(scenarios: feature.scenarios,
+                                                        additionalTags: feature.tags, retryCount: retryCount)
         let overallResult = featureResult(from: scenarioResults)
         return FeatureReport(feature: feature, scenarioReports: scenarioResults, result: overallResult)
     }
@@ -78,7 +79,8 @@ class ScenarioExecutionService: ExecutionService {
         return (scenarioFailures.isEmpty) ? .success : .failure(scenarioFailures)
     }
     
-    func execute(scenarios: [ParsedScenario], additionalTags: [ParsedTag]? = nil, retryCount: Int = 0) -> [ScenarioReport] {
+    func execute(scenarios: [ParsedScenario], additionalTags: [ParsedTag]? = nil,
+                 retryCount: Int = 0) -> [ScenarioReport] {
         let outlineParser = ScenarioOutlineParser()
         var results: [ScenarioReport] = []
             
@@ -100,7 +102,8 @@ class ScenarioExecutionService: ExecutionService {
                 scenarioTags.append(contentsOf: additionalTags)
             }
             let shouldExecuteFeature = conditionalExecutionService.shouldExecuteScenario(tags: scenarioTags)
-            let nonExecutionResult: ScenarioResult = .notExecuted(.tagMismatch(tagExpr: scenarioTagExpr, testRunnerTagExpr: tagExpression))
+            let nonExecutionResult: ScenarioResult = .notExecuted(.tagMismatch(tagExpr: scenarioTagExpr,
+                                                                               testRunnerTagExpr: tagExpression))
             
             if !shouldExecuteFeature {
                 results.append(ScenarioReport.scenario(scenario, result: nonExecutionResult))
@@ -118,7 +121,8 @@ class ScenarioExecutionService: ExecutionService {
                 let result = scenarioReport(name: scenario.name, scenarioText: scenario.text, retryCount: retryCount)
                 results.append(ScenarioReport.scenario(scenario, result: result))
             case .scenarioOutline, .scenarioPermutations:
-                let scenarioTexts = outlineParser.scenariosWithExampleSubstitutions(scenario: scenario.text, type: scenario.type)
+                let scenarioTexts = outlineParser.scenariosWithExampleSubstitutions(scenario: scenario.text,
+                                                                                    type: scenario.type)
                 var outlineResults: [ScenarioOutlineResult] = []
                 for scenarioText in scenarioTexts {
                     let result = scenarioReport(name: scenario.name, scenarioText: scenarioText, retryCount: retryCount)
@@ -229,8 +233,6 @@ class ScenarioExecutionService: ExecutionService {
             */
             
         }
-        
-        
         
         if let previousEvaluable = previousStep {
             guard previousEvaluable.evaluable.evaluate() else {

@@ -51,7 +51,8 @@ class DefaultStepResolutionService: StepResolutionService {
             manualSteps.merge(dict: stepsForScreen)
         }
         for manualStep in type(of: self).manualSteps.keys {
-            if case .manual(let stepDefinition) = manualStep, isMatch(step: trimmedStep, potentialMatchingStepString: stepDefinition) {
+            if case .manual(let stepDefinition) = manualStep, isMatch(step: trimmedStep,
+                                                                      potentialMatchingStepString: stepDefinition) {
                 return type(of: self).manualSteps[manualStep]
             }
         }
@@ -68,7 +69,8 @@ class DefaultStepResolutionService: StepResolutionService {
             if case .existence(let existenceTemplates) = stepForScreen {
                 for existenceTemplate in existenceTemplates {
                     let matchByName = substituteParameter(template: existenceTemplate, substitution: currentScreen.name)
-                    let matchById = substituteParameter(template: existenceTemplate, substitution: currentScreen.identifier)
+                    let matchById = substituteParameter(template: existenceTemplate,
+                                                        substitution: currentScreen.identifier)
                     if isMatch(step: trimmedStep, potentialMatchingStepString: matchByName)
                         || isMatch(step: trimmedStep, potentialMatchingStepString: matchById) {
                         return screenExistence(element: currentScreen)
@@ -80,7 +82,8 @@ class DefaultStepResolutionService: StepResolutionService {
         for elementType in screenElements.keys {
             if let elementsOfType = screenElements[elementType] {
                 let stepsForElementsOfType = steps(elementType: elementType, screen: currentScreen)
-                let potentialMatches = potentialSteps(elements: elementsOfType, parameterisedSteps: stepsForElementsOfType)
+                let potentialMatches = potentialSteps(elements: elementsOfType,
+                                                      parameterisedSteps: stepsForElementsOfType)
                 for potentialMatch in potentialMatches {
                     if isMatch(step: trimmedStep, potentialMatch: potentialMatch) {
                         return evaluable(matchingStep: potentialMatch)
@@ -277,7 +280,9 @@ private extension DefaultStepResolutionService {
             for parameterisedStep in parameterisedSteps {
                 switch parameterisedStep {
                 case .existence(let existenceSteps):
-                    let potentials = existenceSteps.map { PotentialMatchingStep(element: element, interaction: .existence, template: $0) }
+                    let potentials = existenceSteps.map {
+                        PotentialMatchingStep(element: element, interaction: .existence, template: $0)
+                    }
                     result.append(contentsOf: potentials)
                 case .interaction(let interactionSteps):
                     let potentials: [[PotentialMatchingStep]] = interactionSteps.compactMap { x in
@@ -285,7 +290,8 @@ private extension DefaultStepResolutionService {
                             return nil
                         }
                         return x.value.map { interactionStep in
-                            return PotentialMatchingStep(element: element, interaction: interaction, template: interactionStep)
+                            return PotentialMatchingStep(element: element, interaction: interaction,
+                                                         template: interactionStep)
                         }
                     }
                     result.append(contentsOf: potentials.flatMap { $0 })
@@ -298,9 +304,12 @@ private extension DefaultStepResolutionService {
     }
     
     func isMatch(step: String, potentialMatch: PotentialMatchingStep) -> Bool {
-        let matchByName = substituteParameter(template: potentialMatch.template, substitution: potentialMatch.element.name)
-        let matchById = substituteParameter(template: potentialMatch.template, substitution: potentialMatch.element.identifier)
-        if isMatch(step: step, potentialMatchingStepString: matchByName) || isMatch(step: step, potentialMatchingStepString: matchById) {
+        let matchByName = substituteParameter(template: potentialMatch.template,
+                                              substitution: potentialMatch.element.name)
+        let matchById = substituteParameter(template: potentialMatch.template,
+                                            substitution: potentialMatch.element.identifier)
+        if isMatch(step: step, potentialMatchingStepString: matchByName)
+            || isMatch(step: step, potentialMatchingStepString: matchById) {
             return true
         }
         return false

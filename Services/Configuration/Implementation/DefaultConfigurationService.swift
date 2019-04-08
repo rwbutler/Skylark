@@ -10,7 +10,7 @@ import Foundation
 public class DefaultConfigurationService: ConfigurationService {
     
     let parser = ConfigurationParsingService()
-    let resourceResolver = DefaultResourceResolutionService()
+    let resourceResolver = DefaultConfigurationResolutionService()
     
     func configuration() -> Result<SkylarkConfiguration, ConfigurationError> {
         guard let configurationURL = resourceResolver.url(forResource: "Skylark", withExtension: "json") else {

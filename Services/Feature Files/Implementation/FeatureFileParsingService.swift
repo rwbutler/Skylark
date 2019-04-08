@@ -27,7 +27,8 @@ class FeatureFileParsingService: ParsingService {
             let featureTags = tags(from: featureDefinition)
             let text = featureText(from: featureDefinition)
             let tagExpression = self.tagExpression(from: featureDefinition)
-            let feature = ParsedFeature(name: name, tags: featureTags, scenarios: scenarios, tagExpression: tagExpression, text: text)
+            let feature = ParsedFeature(name: name, tags: featureTags, scenarios: scenarios,
+                                        tagExpression: tagExpression, text: text)
             return .success(feature)
         }
         return .failure(.unexpectedFormat(nil))
@@ -50,7 +51,8 @@ class FeatureFileParsingService: ParsingService {
                 let type = self.scenarioType(from: scenarioText)
                 let scenarioTags = self.tags(from: scenarioText)
                 let tagExpression = self.tagExpression(from: scenarioText)
-                return ParsedScenario(name: name, tagExpression: tagExpression, tags: scenarioTags, text: text, type: type)
+                return ParsedScenario(name: name, tagExpression: tagExpression,
+                                      tags: scenarioTags, text: text, type: type)
             }
             return scenarios
         }

@@ -14,6 +14,11 @@ struct Services {
         return DefaultConfigurationService()
     }
     
+    /// Service for reporting on result of test executions.
+    static var configurationResolution: ConfigurationResolutionService {
+        return DefaultConfigurationResolutionService()
+    }
+    
     static var contextManagement: ContextManagementService?
     
     static func contextManagement(context: Screen.Identifier) -> ContextManagementService? {
@@ -39,14 +44,7 @@ struct Services {
         contextManagement = DefaultContextManagementService(context: context, model: model)
         return contextManagement
     }
-    /*
- switch configurationService.configuration() {
- case .success(let configuration):
- stepResolutionService = Services.stepResolution(context: "main", model: configuration, testCase: testCase)
- case .failure(let error):
- print(error)
- }
- */
+
     static func stepResolution(context: Screen.Identifier, model: SkylarkConfiguration,
                                testCase: XCTestCase) -> StepResolutionService? {
         guard let contextManagementService = contextManagement(context: context, model: model) else {
@@ -56,7 +54,18 @@ struct Services {
                                             model: model, testCase: testCase)
     }
     
-    static var resourceResolution: ResourceResolutionService {
-        return DefaultResourceResolutionService()
+    /// Service for reporting on result of test executions.
+    func reportingService(scenarioOutlineResults: [ScenarioOutlineResult]) -> ReportingService {
+        return DefaultReportingService(scenarioOutlineResults: scenarioOutlineResults)
+    }
+    
+    /// Service for reporting on result of test executions.
+    func reportingService(scenarioReports: [ScenarioReport]) -> ReportingService {
+        return DefaultReportingService(scenarioReports: scenarioReports)
+    }
+    
+    /// Service for reporting on result of test executions.
+    func reportingService(scenarioResults: [ScenarioResult]) -> ReportingService {
+        return DefaultReportingService(scenarioResults: scenarioResults)
     }
 }

@@ -2,11 +2,11 @@
 //  ResourceResolutionService.swift
 //  Skylark
 //
-//  Created by rossbutler on 3/3/19.
+//  Created by Ross Butler on 3/3/19.
 //
 
 import Foundation
 
-protocol ResourceResolutionService {
+protocol ConfigurationResolutionService {
     func url(forResource resourceName: String?, withExtension resourceExtension: String?) -> URL?
 }

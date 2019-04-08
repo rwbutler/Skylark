@@ -5,3 +5,8 @@ opt_in_rules:
   - empty_count
 excluded:
 reporter: "xcode"
+type_name:
+  excluded:
+    - T
+cyclomatic_complexity:
+  warning: 16

@@ -11,7 +11,6 @@
 		077F98EA833E6345DAE5D33DF7348125 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6E88A450A84E3957158B3B3459740AA /* Foundation.framework */; };
 		130BE0652257A96100A45A7B /* Skylark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BDFF02257A96100A45A7B /* Skylark.swift */; };
 		130BE0662257A96100A45A7B /* ScenarioTagsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BDFF32257A96100A45A7B /* ScenarioTagsService.swift */; };
-		130BE0672257A96100A45A7B /* SkylarkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BDFF42257A96100A45A7B /* SkylarkResult.swift */; };
 		130BE0682257A96100A45A7B /* XCUIElementAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BDFF62257A96100A45A7B /* XCUIElementAdditions.swift */; };
 		130BE0692257A96100A45A7B /* DictionaryAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BDFF72257A96100A45A7B /* DictionaryAdditions.swift */; };
 		130BE06A2257A96100A45A7B /* ScenarioReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BDFFA2257A96100A45A7B /* ScenarioReport.swift */; };
@@ -53,8 +52,8 @@
 		130BE08E2257A96100A45A7B /* GherkinSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE02B2257A96100A45A7B /* GherkinSteps.swift */; };
 		130BE08F2257A96100A45A7B /* ScenarioOutline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE02C2257A96100A45A7B /* ScenarioOutline.swift */; };
 		130BE0902257A96100A45A7B /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE02D2257A96100A45A7B /* Page.swift */; };
-		130BE0912257A96100A45A7B /* ResourceResolutionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE0312257A96100A45A7B /* ResourceResolutionService.swift */; };
-		130BE0922257A96100A45A7B /* DefaultResourceResolutionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE0332257A96100A45A7B /* DefaultResourceResolutionService.swift */; };
+		130BE0912257A96100A45A7B /* ConfigurationResolutionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE0312257A96100A45A7B /* ConfigurationResolutionService.swift */; };
+		130BE0922257A96100A45A7B /* DefaultConfigurationResolutionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE0332257A96100A45A7B /* DefaultConfigurationResolutionService.swift */; };
 		130BE0932257A96100A45A7B /* ConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE0362257A96100A45A7B /* ConfigurationService.swift */; };
 		130BE0942257A96100A45A7B /* ConfigurationParsingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE0392257A96100A45A7B /* ConfigurationParsingService.swift */; };
 		130BE0952257A96100A45A7B /* DefaultConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE03A2257A96100A45A7B /* DefaultConfigurationService.swift */; };
@@ -78,6 +77,8 @@
 		130BE0A72257A96100A45A7B /* ParsedFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE0612257A96100A45A7B /* ParsedFeature.swift */; };
 		130BE0A82257A96100A45A7B /* ParsedScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE0622257A96100A45A7B /* ParsedScenario.swift */; };
 		130BE0A92257A96100A45A7B /* ParsedTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE0632257A96100A45A7B /* ParsedTag.swift */; };
+		130BE0AE2257AEAC00A45A7B /* ReportingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE0AD2257AEAC00A45A7B /* ReportingService.swift */; };
+		130BE0B02257AECC00A45A7B /* DefaultReportingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130BE0AF2257AECC00A45A7B /* DefaultReportingService.swift */; };
 		13DC712F216BAA14002B9CBA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13DC712E216BAA14002B9CBA /* XCTest.framework */; };
 		13E09BC12170BC6500E5796E /* Steps.json in Resources */ = {isa = PBXBuildFile; fileRef = 13E09B56216FF0EB00E5796E /* Steps.json */; };
 		361A169C1D7B368AA85052FA75CB7808 /* Skylark-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FDCCF8656E0D9A0AAC88A6037680126 /* Skylark-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -111,7 +112,6 @@
 		0E5ABEC93C3F4319165EDF243E71AB75 /* Skylark.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Skylark.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		130BDFF02257A96100A45A7B /* Skylark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skylark.swift; sourceTree = "<group>"; };
 		130BDFF32257A96100A45A7B /* ScenarioTagsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScenarioTagsService.swift; sourceTree = "<group>"; };
-		130BDFF42257A96100A45A7B /* SkylarkResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkylarkResult.swift; sourceTree = "<group>"; };
 		130BDFF62257A96100A45A7B /* XCUIElementAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCUIElementAdditions.swift; sourceTree = "<group>"; };
 		130BDFF72257A96100A45A7B /* DictionaryAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryAdditions.swift; sourceTree = "<group>"; };
 		130BDFFA2257A96100A45A7B /* ScenarioReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScenarioReport.swift; sourceTree = "<group>"; };
@@ -153,8 +153,8 @@
 		130BE02B2257A96100A45A7B /* GherkinSteps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GherkinSteps.swift; sourceTree = "<group>"; };
 		130BE02C2257A96100A45A7B /* ScenarioOutline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScenarioOutline.swift; sourceTree = "<group>"; };
 		130BE02D2257A96100A45A7B /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
-		130BE0312257A96100A45A7B /* ResourceResolutionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceResolutionService.swift; sourceTree = "<group>"; };
-		130BE0332257A96100A45A7B /* DefaultResourceResolutionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultResourceResolutionService.swift; sourceTree = "<group>"; };
+		130BE0312257A96100A45A7B /* ConfigurationResolutionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationResolutionService.swift; sourceTree = "<group>"; };
+		130BE0332257A96100A45A7B /* DefaultConfigurationResolutionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultConfigurationResolutionService.swift; sourceTree = "<group>"; };
 		130BE0362257A96100A45A7B /* ConfigurationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationService.swift; sourceTree = "<group>"; };
 		130BE0392257A96100A45A7B /* ConfigurationParsingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationParsingService.swift; sourceTree = "<group>"; };
 		130BE03A2257A96100A45A7B /* DefaultConfigurationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultConfigurationService.swift; sourceTree = "<group>"; };
@@ -178,6 +178,8 @@
 		130BE0612257A96100A45A7B /* ParsedFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsedFeature.swift; sourceTree = "<group>"; };
 		130BE0622257A96100A45A7B /* ParsedScenario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsedScenario.swift; sourceTree = "<group>"; };
 		130BE0632257A96100A45A7B /* ParsedTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsedTag.swift; sourceTree = "<group>"; };
+		130BE0AD2257AEAC00A45A7B /* ReportingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportingService.swift; sourceTree = "<group>"; };
+		130BE0AF2257AECC00A45A7B /* DefaultReportingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReportingService.swift; sourceTree = "<group>"; };
 		13265CFD4D4A17DB18A912BDC8EF014A /* Pods-Skylark_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Skylark_Tests-umbrella.h"; sourceTree = "<group>"; };
 		13DC712E216BAA14002B9CBA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		13E09B56216FF0EB00E5796E /* Steps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Steps.json; sourceTree = "<group>"; };
@@ -262,7 +264,6 @@
 			children = (
 				130BDFF02257A96100A45A7B /* Skylark.swift */,
 				130BDFF12257A96100A45A7B /* Scenario Tags */,
-				130BDFF42257A96100A45A7B /* SkylarkResult.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -452,7 +453,8 @@
 		130BE02E2257A96100A45A7B /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				130BE02F2257A96100A45A7B /* Resource Resolution */,
+				130BE02F2257A96100A45A7B /* Config Resolution */,
+				130BE0AA2257AE9300A45A7B /* Reporting */,
 				130BE0342257A96100A45A7B /* Configuration */,
 				130BE0402257A96100A45A7B /* Shared */,
 				130BE0422257A96100A45A7B /* Execution */,
@@ -464,19 +466,19 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		130BE02F2257A96100A45A7B /* Resource Resolution */ = {
+		130BE02F2257A96100A45A7B /* Config Resolution */ = {
 			isa = PBXGroup;
 			children = (
 				130BE0302257A96100A45A7B /* Protocol */,
 				130BE0322257A96100A45A7B /* Implementation */,
 			);
-			path = "Resource Resolution";
+			path = "Config Resolution";
 			sourceTree = "<group>";
 		};
 		130BE0302257A96100A45A7B /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				130BE0312257A96100A45A7B /* ResourceResolutionService.swift */,
+				130BE0312257A96100A45A7B /* ConfigurationResolutionService.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -484,7 +486,7 @@
 		130BE0322257A96100A45A7B /* Implementation */ = {
 			isa = PBXGroup;
 			children = (
-				130BE0332257A96100A45A7B /* DefaultResourceResolutionService.swift */,
+				130BE0332257A96100A45A7B /* DefaultConfigurationResolutionService.swift */,
 			);
 			path = Implementation;
 			sourceTree = "<group>";
@@ -710,6 +712,31 @@
 			children = (
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		130BE0AA2257AE9300A45A7B /* Reporting */ = {
+			isa = PBXGroup;
+			children = (
+				130BE0AC2257AE9D00A45A7B /* Implementation */,
+				130BE0AB2257AE9A00A45A7B /* Protocol */,
+			);
+			path = Reporting;
+			sourceTree = "<group>";
+		};
+		130BE0AB2257AE9A00A45A7B /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				130BE0AD2257AEAC00A45A7B /* ReportingService.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		130BE0AC2257AE9D00A45A7B /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				130BE0AF2257AECC00A45A7B /* DefaultReportingService.swift */,
+			);
+			path = Implementation;
 			sourceTree = "<group>";
 		};
 		14B8B9B15ECBE87983FF987239AB2D7B /* Frameworks */ = {
@@ -1043,11 +1070,12 @@
 				130BE09E2257A96100A45A7B /* DefaultStepResolutionService.swift in Sources */,
 				130BE07F2257A96100A45A7B /* StepParser.swift in Sources */,
 				130BE0732257A96100A45A7B /* ContextTransition.swift in Sources */,
-				130BE0922257A96100A45A7B /* DefaultResourceResolutionService.swift in Sources */,
+				130BE0922257A96100A45A7B /* DefaultConfigurationResolutionService.swift in Sources */,
 				130BE06A2257A96100A45A7B /* ScenarioReport.swift in Sources */,
 				130BE0A32257A96100A45A7B /* ParsingService.swift in Sources */,
 				130BE0882257A96100A45A7B /* OrStep.swift in Sources */,
 				130BE07E2257A96100A45A7B /* PageParser.swift in Sources */,
+				130BE0B02257AECC00A45A7B /* DefaultReportingService.swift in Sources */,
 				130BE0902257A96100A45A7B /* Page.swift in Sources */,
 				130BE07B2257A96100A45A7B /* ElementInteraction.swift in Sources */,
 				130BE0A22257A96100A45A7B /* Context.swift in Sources */,
@@ -1060,7 +1088,6 @@
 				130BE0792257A96100A45A7B /* ParameterisedStepType.swift in Sources */,
 				130BE08C2257A96100A45A7B /* Operator.swift in Sources */,
 				130BE0A42257A96100A45A7B /* ParsingError.swift in Sources */,
-				130BE0672257A96100A45A7B /* SkylarkResult.swift in Sources */,
 				130BE0752257A96100A45A7B /* ElementType.swift in Sources */,
 				130BE0852257A96100A45A7B /* Step.swift in Sources */,
 				130BE06F2257A96100A45A7B /* FeatureReport.swift in Sources */,
@@ -1085,8 +1112,9 @@
 				130BE06D2257A96100A45A7B /* ScenarioOutlineResult.swift in Sources */,
 				130BE0A62257A96100A45A7B /* ParsedScenarioType.swift in Sources */,
 				130BE0892257A96100A45A7B /* AndStep.swift in Sources */,
+				130BE0AE2257AEAC00A45A7B /* ReportingService.swift in Sources */,
 				130BE0862257A96100A45A7B /* SimpleStep.swift in Sources */,
-				130BE0912257A96100A45A7B /* ResourceResolutionService.swift in Sources */,
+				130BE0912257A96100A45A7B /* ConfigurationResolutionService.swift in Sources */,
 				130BE09A2257A96100A45A7B /* ExecutionService.swift in Sources */,
 				130BE08D2257A96100A45A7B /* StepDefinitions.swift in Sources */,
 				130BE07D2257A96100A45A7B /* ApplicationMap.swift in Sources */,

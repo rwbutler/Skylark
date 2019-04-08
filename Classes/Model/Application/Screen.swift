@@ -40,7 +40,8 @@ struct Screen: Codable {
             return elementTypeTuple
         }
         elements = Dictionary(elementTuples)
-        guard let steps = try container.decodeIfPresent([String: [String: ParameterisedStepType]].self, forKey: .steps) else {
+        guard let steps = try container.decodeIfPresent([String: [String: ParameterisedStepType]].self,
+                                                        forKey: .steps) else {
             self.steps = nil
             return
         }

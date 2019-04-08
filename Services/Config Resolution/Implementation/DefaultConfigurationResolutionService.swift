@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class DefaultResourceResolutionService: ResourceResolutionService {
+public class DefaultConfigurationResolutionService: ConfigurationResolutionService {
     func url(forResource resourceName: String?, withExtension resourceExtension: String?) -> URL? {
         let allBundles = Bundle.allBundles
         let currentBundle = Bundle(for: type(of: self))

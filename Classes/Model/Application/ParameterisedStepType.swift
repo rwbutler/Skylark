@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ParameterisedStepType: Codable {
+enum ParameterisedStepType: Codable, Hashable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
@@ -34,7 +34,7 @@ enum ParameterisedStepType: Codable {
         guard let codingKey = decoder.codingPath.last, let keys = CodingKeys(rawValue: codingKey.stringValue) else {
             let container = try decoder.singleValueContainer()
             throw DecodingError.dataCorruptedError(
-                in: container, debugDescription: "Cannot initialize SkylarkParameterisedStepType with invalid CodingKey."
+                in: container, debugDescription: "Cannot initialize ParameterisedStepType with invalid CodingKey."
             )
         }
         let container = try decoder.singleValueContainer()
@@ -48,19 +48,6 @@ enum ParameterisedStepType: Codable {
         case .manual:
             let leftValue =  try container.decode(String.self)
             self = .manual(leftValue)
-        }
-    }
-}
-
-extension ParameterisedStepType: Hashable {
-    public var hashValue: Int {
-        switch self {
-        case .existence(let values):
-            return values.hashValue
-        case.manual(let value):
-            return value.hashValue
-        case .interaction(let values):
-            return values.hashValue
         }
     }
 }

@@ -9,7 +9,6 @@ import Foundation
 
 struct ConfigurationParsingService: ParsingService {
     
-    // swiftlint:disable:next type_name
     typealias T = SkylarkConfiguration
     
     func parse(_ data: Data?) -> Result<T, ParsingError> {

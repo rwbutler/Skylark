@@ -43,13 +43,13 @@ class ScenarioExecutionService: ExecutionService {
     private func execute(scenarios: [Scenario], additionalTags: [Tag]? = nil, retryCount: Int = 0) -> [ScenarioReport] {
         let outlineParser = ScenarioOutlineParser()
         var results: [ScenarioReport] = []
-            
+        
         if !launchArgs.contains(where: { $0 == .resetEachScenario }) {
             tearDown(for: .simulatorReset)
             launch(launchArguments: launchArgs)()
             setUp(for: .simulatorReset)
         }
-
+        
         for scenario in scenarios {
             guard let tagExpression = self.tagExpression(),
                 let conditionalExecutionService = ScenarioTagsService(tagExpression: tagExpression) else {
@@ -108,7 +108,8 @@ class ScenarioExecutionService: ExecutionService {
             if let previousEvaluable = previousStep {
                 setUp(for: .eachStep)
                 setUp(scenario: scenarioName, step: previousEvaluable.text)
-                let output = "\nRunning step '\(previousEvaluable.text)' in '\(currentContext)' context\(emojiString)"
+                let trimmedStep = previousEvaluable.text.trimmingCharacters(in: .whitespacesAndNewlines)
+                let output = "\nRunning step '\(trimmedStep)' in '\(currentContext)' context\(emojiString)"
                 print(output)
                 guard previousEvaluable.evaluable.evaluate() else {
                     tearDown(for: .eachStep)
@@ -133,7 +134,8 @@ class ScenarioExecutionService: ExecutionService {
         if let previousEvaluable = previousStep {
             setUp(for: .eachStep)
             setUp(scenario: scenarioName, step: previousEvaluable.text)
-            let output = "\nRunning step '\(previousEvaluable.text)' in '\(currentContext)' context\(emojiString)"
+            let trimmedStep = previousEvaluable.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            let output = "\nRunning step '\(trimmedStep)' in '\(currentContext)' context\(emojiString)"
             print(output)
             guard previousEvaluable.evaluable.evaluate() else {
                 tearDown(for: .eachStep)

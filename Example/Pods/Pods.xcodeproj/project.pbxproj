@@ -261,15 +261,15 @@
 		13317D5C22C626B300C96CD9 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				13317D5D22C626B300C96CD9 /* Resource Resolution */,
 				13317D6222C626B300C96CD9 /* Configuration */,
+				13317D8522C626B300C96CD9 /* Context Management */,
+				13317D7522C626B300C96CD9 /* Execution */,
+				13317D9222C626B300C96CD9 /* Feature Files */,
+				13317D8D22C626B300C96CD9 /* Parsing */,
+				13317D5D22C626B300C96CD9 /* Resource Resolution */,
 				13317D6E22C626B300C96CD9 /* Scenario Tags */,
 				13317D7322C626B300C96CD9 /* Shared */,
-				13317D7522C626B300C96CD9 /* Execution */,
 				13317D7E22C626B300C96CD9 /* Step Resolution */,
-				13317D8522C626B300C96CD9 /* Context Management */,
-				13317D8D22C626B300C96CD9 /* Parsing */,
-				13317D9222C626B300C96CD9 /* Feature Files */,
 			);
 			name = Services;
 			path = Skylark/Services;

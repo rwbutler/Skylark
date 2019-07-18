@@ -19,7 +19,8 @@ extension ScenarioFailure: CustomStringConvertible {
         case .noMatchingStep(let step):
             return "Didn't know what to do with '\(step)' 🤷🏻‍♂️."
         case .stepFailure(let step):
-            return "Assertion failure for '\(step)' ❌."
+            let trimmedStep = step.trimmingCharacters(in: .whitespacesAndNewlines)
+            return "Assertion failure for '\(trimmedStep)' ❌."
         }
     }
     

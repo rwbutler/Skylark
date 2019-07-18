@@ -10,12 +10,24 @@ import XCTest
 
 struct TestReporter {
     
+    // MARK: Type Definitions
+    private struct FailureReport {
+        let scenario: Scenario
+        let failureResults: [ScenarioFailure]
+    }
+    
+    private enum Source {
+        case feature
+        case scenario
+    }
+    
     // MARK: - State
     private let numberOfScenariosPassed: Int
     private let numberOfScenariosFlaky: Int
     private let numberOfScenariosFailed: Int
     private let numberOfScenariosNotExecuted: Int
     private let outputs: [Skylark.Output]
+    private var scenarioReports: [ScenarioReport]?
     
     var boolValue: Bool {
         return numberOfScenariosFailed == 0
@@ -58,6 +70,7 @@ struct TestReporter {
             }
         }
         self.init(scenarioResults: scenarioResults, output: output)
+        self.scenarioReports = scenarioReports
     }
     
     private init(scenarioResults: [ScenarioResult], output: [Skylark.Output]) {
@@ -154,8 +167,49 @@ struct TestReporter {
         return String(format: "%.1f", value)
     }
     
+    private func failureReports(_ scenarioReports: [ScenarioReport]) -> [FailureReport] {
+        var failures: [FailureReport] = []
+        for report in scenarioReports {
+            switch report {
+            case .scenario(let scenario, let scenarioResult):
+                if case .failure(let failureResult) = scenarioResult {
+                    failures.append(FailureReport(scenario: scenario, failureResults: [failureResult]))
+                }
+            case .scenarioOutline(let scenario, let results), .scenarioPermutations(let scenario, let results):
+                var failureResults: [ScenarioFailure] = []
+                for scenarioResult in results {
+                    if case .failure(let error) = scenarioResult.result {
+                        failureResults.append(error)
+                    }
+                }
+                if !failureResults.isEmpty {
+                    failures.append(FailureReport(scenario: scenario, failureResults: failureResults))
+                }
+            }
+        }
+        return failures
+    }
+    
+    func failureReport() -> String? {
+        guard let scenarioReports = self.scenarioReports else {
+            return nil
+        }
+        var summaryText = "\nFailures\n"
+        for failureReport in failureReports(scenarioReports) {
+            summaryText += "\t\(failureReport.scenario.name) failed because:\n"
+            for failure in failureReport.failureResults {
+                summaryText += "\t\t-> \(failure.description)\n"
+            }
+        }
+        return summaryText
+    }
+    
     func summary() -> String {
-        var summaryText = "\nSummary\n"
+        var summaryText = ""
+        if let failureReport = self.failureReport() {
+            summaryText += failureReport
+        }
+        summaryText += "\nSummary\n"
         if numberOfScenariosPassed > 0 {
             summaryText += "\t\(stringRepresentationScenariosPassed())\n"
         }

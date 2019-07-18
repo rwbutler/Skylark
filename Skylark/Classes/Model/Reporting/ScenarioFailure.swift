@@ -17,10 +17,12 @@ extension ScenarioFailure: CustomStringConvertible {
     var description: String {
         switch self {
         case .noMatchingStep(let step):
-            return "Didn't know what to do with '\(step)' 🤷🏻‍♂️."
+            let emojiString = Skylark.emojiInOutput ? "🤷🏻‍♂️" : ""
+            return "Didn't know what to do with '\(step)' \(emojiString)."
         case .stepFailure(let step):
+            let emojiString = Skylark.emojiInOutput ? "❌" : ""
             let trimmedStep = step.trimmingCharacters(in: .whitespacesAndNewlines)
-            return "Assertion failure for '\(trimmedStep)' ❌."
+            return "Assertion failure for '\(step)' \(emojiString)."
         }
     }
     

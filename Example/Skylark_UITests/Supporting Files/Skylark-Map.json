@@ -1,0 +1,478 @@
+{
+    "map": {
+        "home": [{
+            "destination": "trolley",
+            "actions": [
+                {
+                    "action": "tap",
+                    "element": "tab-bar-trolley"
+                }
+            ]
+        }, {
+            "destination": "browse",
+            "actions": [
+                {
+                    "action": "tap",
+                    "element": "home-header-view-browse-button"
+                }
+            ]
+        }, {
+            "destination": "search",
+            "actions": [
+                {
+                    "action": "tap",
+                    "element": "home-header-view-search-button"
+                }
+            ]
+        }, {
+            "destination": "more",
+            "actions": [
+                {
+                    "action": "tap",
+                    "element": "More"
+                }
+            ]
+        }],
+        "more": [{
+            "destination": "help",
+            "actions": [
+                {
+                    "action": "tap",
+                    "element": "Help"
+                }
+            ]
+        }, {
+            "destination": "legal",
+            "actions": [
+                {
+                    "action": "tap",
+                    "element": "Legal"
+                }
+            ]
+        }],
+        "legal": [{
+            "destination": "cookie-policy",
+            "actions": [
+                {
+                    "action": "tap",
+                    "element": "Cookie Policy"
+                }
+            ]
+        }, {
+            "destination": "privacy-policy",
+            "actions": [
+                {
+                    "action": "tap",
+                    "element": "Privacy Policy"
+                }
+            ]
+        }, {
+            "destination": "terms-and-conditions",
+            "actions": [
+                {
+                    "action": "tap",
+                    "element": "Terms & Conditions"
+                }
+            ]
+        }],
+        "pnpl": [{
+            "destination": "web-checkout",
+            "actions": [
+                {
+                    "action": "tap",
+                    "element": "pay-now-button"
+                }
+            ]
+        }],
+        "search": [{
+            "destination": "home",
+            "actions": [
+                {
+                    "direction": "backwards",
+                    "action": "tap",
+                    "element": "tab-bar-home"
+                }
+            ]
+        }],
+        "pdp": [{
+            "destination": "trolley",
+            "actions": [
+                {
+                    "action": "tap",
+                    "element": "tab-bar-trolley"
+                }
+            ]
+        }]
+    },
+    "contexts": {
+        "home": {
+            "name": "Home",
+            "elements": [{
+                "name": "find product",
+                "id": "home-header-view-search-button",
+                "type": "buttons"
+            }, {
+                "name": "browse",
+                "id": "home-header-view-browse-button",
+                "type": "buttons"
+            }, {
+                "name": "homepage tile section",
+                "id": "home-tiles-view-tile-0",
+                "type": "buttons"
+            }, {
+                "name": "trolley",
+                "id": "tab-bar-trolley",
+                "type": "tabs"
+            }, {
+                "name": "featured products section",
+                "id": "hooklogic",
+                "type": "elements"
+            }, {
+                "name": "popular categories section",
+                "id": "popularcategory",
+                "type": "elements"
+            }, {
+                "name": "More",
+                "id": "More",
+                "type": "tabs"
+            }]
+        },
+        "browse": {
+            "name": "Browse",
+            "elements": [{
+                "name": "technology",
+                "id": "technology",
+                "type": "cells"
+            }, {
+                "name": "home and garden",
+                "id": "home-and-garden",
+                "type": "cells"
+            }, {
+                "name": "baby and nursery",
+                "id": "baby-and-nursery",
+                "type": "cells"
+            }, {
+                "name": "toys",
+                "id": "toys",
+                "type": "cells"
+            }, {
+                "name": "sports and leisure",
+                "id": "sports-and-leisure",
+                "type": "cells"
+            }, {
+                "name": "health and beauty",
+                "id": "health-and-beauty",
+                "type": "cells"
+            }, {
+                "name": "clothing",
+                "id": "clothing",
+                "type": "cells"
+            }, {
+                "name": "jewellery and watches",
+                "id": "jewellery-and-watches",
+                "type": "cells"
+            }, {
+                "name": "gifts",
+                "id": "gifts",
+                "type": "cells"
+            }, {
+                "name": "search option",
+                "id": "search-text-field",
+                "type": "text-fields"
+            }]
+        },
+        "search": {
+            "name": "Search",
+            "elements": [{
+                "name": "cancel",
+                "id": "cancel-button",
+                "type": "buttons"
+            }, {
+                "name": "home",
+                "id": "tab-bar-home",
+                "type": "tabs"
+            }, {
+                "name": "search option",
+                "id": "search-text-field",
+                "type": "text-fields"
+            }, {
+                "name": "search",
+                "id": "search-text-field",
+                "type": "text-fields"
+            }]
+        },
+        "web-checkout": {
+            "name": "Web Checkout",
+            "elements": [{
+                "name": "saved-cards",
+                "id": "Your saved cards",
+                "type": "text"
+            }]
+        },
+        "help": {
+            "name": "Help",
+            "elements": [{
+                "name": "Help!",
+                "id": "Help!",
+                "type": "text"
+            }]
+        },
+        "cookie-policy": {
+            "name": "Cookie Policy",
+            "elements": [{
+                "name": "Our Cookie Policy",
+                "id": "Our Cookie Policy",
+                "type": "text"
+            }]
+        },
+        "privacy-policy": {
+            "name": "Privacy Policy",
+            "elements": [{
+                "name": "Sainsbury's Group Privacy Policy",
+                "id": "Sainsbury's Group Privacy Policy",
+                "type": "text"
+            }]
+        },
+        "terms-and-conditions": {
+            "name": "Terms & Conditions",
+            "elements": [{
+                "name": "Terms & Conditions",
+                "id": "Terms & Conditions",
+                "type": "text"
+            }]
+        },
+        "legal": {
+            "name": "Legal",
+            "elements": [{
+                "name": "Cookie Policy",
+                "id": "Cookie Policy",
+                "type": "text"
+            }, {
+                "name": "Privacy Policy",
+                "id": "Privacy Policy",
+                "type": "text"
+            }, {
+                "name": "Terms & Conditions",
+                "id": "Terms & Conditions",
+                "type": "text"
+            }]
+        },
+        "wishlists": {
+            "name": "Wishlists",
+            "elements": [{
+                "name": "add wishlist",
+                "id": "add-wishlist",
+                "type": "buttons"
+            }, {
+                "name": "edit",
+                "id": "Edit",
+                "type": "buttons"
+            }]
+        },
+        "trolley": {
+            "name": "Trolley",
+            "elements": [{
+                "name": "Apple Pay",
+                "id": "apple-pay-button",
+                "transient": true,
+                "type": "buttons"
+            }]
+        },
+        "more": {
+            "name": "More",
+            "elements": [{
+                "name": "Help",
+                "id": "Help",
+                "type": "cells"
+            }, {
+                "name": "Legal",
+                "id": "Legal",
+                "type": "cells"
+            }]
+        },
+        "pnpl": {
+            "name": "Pay Now Or Pay Later",
+            "elements": [{
+                "name": "Pay Now",
+                "id": "pay-now-button",
+                "type": "buttons"
+            }, {
+                "name": "Apple Pay",
+                "id": "apple-pay-button",
+                "transient": true,
+                "type": "buttons"
+            }]
+        },
+        "pdp": {
+            "name": "Product Detail Page",
+            "elements": [{
+                "name": "Apple Pay",
+                "id": "apple-pay-button",
+                "transient": true,
+                "type": "buttons"
+            }]
+        }
+    },
+    "steps": {
+        "buttons": {
+            "existence": [
+                "$PARAMETER is displayed",
+                "$PARAMETER is shown",
+                "the $PARAMETER button is displayed",
+                "the $PARAMETER button is shown",
+                "the $PARAMETER is displayed",
+                "the $PARAMETER is shown",
+                "a $PARAMETER button is displayed",
+                "a $PARAMETER button is shown"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap $PARAMETER",
+                    "i tap the $PARAMETER",
+                    "i tap the $PARAMETER icon",
+                    "i tap the $PARAMETER button",
+                    "i tap the $PARAMETER link",
+                    "tap the $PARAMETER button",
+                    "then tap the $PARAMETER button",
+                    "the $PARAMETER button is tapped",
+                    "the $PARAMETER is tapped",
+                    "$PARAMETER is tapped"
+                ]
+            }
+        },
+        "cells": {
+            "existence": [
+                "$PARAMETER cell is displayed",
+                "$PARAMETER cell is shown",
+                "the $PARAMETER cell is displayed",
+                "the $PARAMETER cell is shown"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap on $PARAMETER cell",
+                    "i tap the $PARAMETER cell",
+                    "i tap on the $PARAMETER cell"
+                ]
+            }
+        },
+        "elements": {
+            "existence": [
+                "$PARAMETER is displayed",
+                "$PARAMETER is shown",
+                "the $PARAMETER element is displayed",
+                "the $PARAMETER element is shown",
+                "the $PARAMETER is displayed",
+                "the $PARAMETER is shown",
+                "the $PARAMETER category heading is displayed"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap $PARAMETER",
+                    "i tap the $PARAMETER",
+                    "i tap the $PARAMETER element",
+                    "the $PARAMETER element is tapped",
+                    "the $PARAMETER is tapped",
+                    "$PARAMETER is tapped"
+                ]
+            }
+        },
+        "keyboards": {
+            "existence": [
+                "$PARAMETER is displayed",
+                "$PARAMETER is shown",
+                "the $PARAMETER field is displayed",
+                "the $PARAMETER field is shown",
+                "the $PARAMETER is displayed",
+                "the $PARAMETER is shown"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap $PARAMETER",
+                    "i tap the $PARAMETER",
+                    "i tap the $PARAMETER field",
+                    "the $PARAMETER field is tapped",
+                    "the $PARAMETER is tapped",
+                    "$PARAMETER is tapped",
+                    "the $PARAMETER is active",
+                    "the $PARAMETER field is active"
+                ]
+            }
+        },
+        "tabs": {
+            "existence": [
+                "$PARAMETER tab is displayed",
+                "$PARAMETER tab is shown",
+                "the $PARAMETER tab is displayed",
+                "the $PARAMETER tab is shown"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap $PARAMETER tab",
+                    "i tap the $PARAMETER tab",
+                    "the $PARAMETER tab is tapped",
+                    "$PARAMETER tab is tapped"
+                ]
+            }
+        },
+        "text": {
+            "existence": [
+                "$PARAMETER is displayed",
+                "$PARAMETER is shown",
+                "the $PARAMETER field is displayed",
+                "the $PARAMETER field is shown",
+                "the $PARAMETER is displayed",
+                "the $PARAMETER is shown",
+                "the $PARAMETER category heading is displayed"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap the $PARAMETER text",
+                    "i tap on the $PARAMETER text"
+                ]
+            }
+        },
+        "text-fields": {
+            "existence": [
+                "$PARAMETER is displayed",
+                "$PARAMETER is shown",
+                "the $PARAMETER field is displayed",
+                "the $PARAMETER field is shown",
+                "the $PARAMETER is displayed",
+                "the $PARAMETER is shown"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap $PARAMETER",
+                    "i tap the $PARAMETER",
+                    "i tap the $PARAMETER field",
+                    "the $PARAMETER field is tapped",
+                    "the $PARAMETER is tapped",
+                    "$PARAMETER is tapped",
+                    "the $PARAMETER is active",
+                    "the $PARAMETER field is active"
+                ]
+            }
+        },
+        "pages": {
+            "existence": [
+                "i navigate to the $PARAMETER page",
+                "i navigate to the $PARAMETER screen",
+                "i navigate to the $PARAMETERpage",
+                "i am on the $PARAMETERpage",
+                "i am on the $PARAMETER page",
+                "i am on $PARAMETER",
+                "$PARAMETER is displayed",
+                "the $PARAMETER is displayed",
+                "the $PARAMETER page is displayed",
+                "the $PARAMETERpage is displayed",
+                "the $PARAMETER is shown",
+                "the $PARAMETER page is shown",
+                "the $PARAMETER screen is shown",
+                "the $PARAMETERpage is shown",
+                "the $PARAMETER screen is displayed",
+                "i am on the $PARAMETER screen",
+                "i am on $PARAMETER screen"
+            ]
+        }
+    }
+}

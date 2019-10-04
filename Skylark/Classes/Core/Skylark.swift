@@ -10,32 +10,49 @@ import XCTest
 
 public class Skylark {
     
-    // MARK: - Type definitions
+    // MARK: - Type Definitions
+    
+    /// Framework constants.
     enum Constants {
         static let frameworkName = "Skylark"
         static let configurationType: FileExtension = .json
     }
     
+    /// Requirements in order for the test runner to execute tests.
     struct Dependencies {
         let contextManagementService: ContextManagementService
         let executionService: ExecutionService
         let stepResolutionService: StepResolutionService
     }
     
+    /// Sink to which the framework should send output.
     public typealias Output = SkylarkOutput
     
     // MARK: - Dependencies
     
+    /// Parses and retains framework configuration.
     private let configurationService = Services.configuration
+    
+    /// Manages state transitions between contexts.
     private var contextManagementService: ContextManagementService?
+    
+    /// Executes the scenarios contained within feature files.
     private var executionService: ExecutionService?
+    
+    /// Attempts to resolve resources from available bundles.
     private let resourceResolutionService = Services.resourceResolution
+    
+    /// Resolves step definitions to evaluable expressions.
     private var stepResolutionService: StepResolutionService?
     
     // MARK: - State
     
+    /// Context representing the state of the application when launched.
     private var initialContextId: Context.Identifier?
+    
+    /// Whether or not to include emoji in output.
     public static var emojiInOutput: Bool = true
+    
     private static var isObserving = false
     public var outputs: [Output] {
         get {
@@ -45,7 +62,11 @@ public class Skylark {
             type(of: self).outputs = newValue
         }
     }
+    
+    /// Sink to which the framework should send output.
     public static var outputs: [Output] = [.print]
+    
+    /// Options for how the framework should report to the user.
     public static var reportingOptions: ReportingOptions = .always
     
     /// Set Up closures to be executed prior to scenarios.
@@ -53,10 +74,15 @@ public class Skylark {
     
     /// Tear Down closures to be executed following scenarios.
     private var tearDowns: [TearDown] = []
+    
+    /// The `XCTestCase` to be used when executing tests. TODO: May no longer be required?
     private var testCase: XCTestCase?
+    
+    /// Test report per invocation of test functions, retained in order to report on all test
+    /// results on execution of entire test suite.
     private static var testReports: [TestReport] = []
     
-    /// Observes test execution progress for reporting.
+    /// Observes test execution progress for reporting. TODO: May no longer be required?
     private static let testObserver = TestObserver()
     
     private let timeout: TimeInterval
@@ -107,6 +133,10 @@ public class Skylark {
         contextManagementService?.setContext(identifier: contextId)
     }
     
+    public func setInitialContext(_ contextId: String) {
+        self.initialContextId = contextId
+    }
+    
     public func test(featureFile url: URL, arguments: [LaunchArguments] = []) {
         guard let featureFileData = try? Data(contentsOf: url) else {
             XCTFail("Unable to read feature file from \(url.absoluteString).")
@@ -136,7 +166,6 @@ public class Skylark {
     static func reportTestSummary() {
         let reporter = TestReporter(testReports, output: outputs)
         reporter.report()
-        reporter.assert()
     }
     
     func setTestCase(_ testCase: XCTestCase) {
@@ -161,7 +190,8 @@ public class Skylark {
     /// Executes the scenarios in the specified feature file.
     public func test(featureFile named: String, arguments: [LaunchArguments] = []) {
         let fileExtension = FileExtension.feature.rawValue
-        guard let featureFileURL = resourceResolutionService.url(forResource: named, withExtension: fileExtension) else {
+        guard let featureFileURL = resourceResolutionService.url(forResource: named, withExtension: fileExtension)
+            else {
             XCTFail("No file named \(named).\(fileExtension) exists in the test bundle.")
             return
         }
@@ -191,6 +221,8 @@ public class Skylark {
                 executor.tearDowns = tearDowns
                 let testReport = executor.execute(feature: feature, retryCount: retryCount)
                 addTestReport(testReport)
+                let hasPassed = TestReporter.boolValue(from: testReport)
+                XCTAssertTrue(hasPassed)
             case .failure(let error):
                 failOnConfigurationError(error)
             }
@@ -214,6 +246,8 @@ public class Skylark {
                 executor.tearDowns = tearDowns
                 let testReport = executor.execute(scenarios: scenarios, retryCount: retryCount)
                 addTestReport(testReport)
+                let hasPassed = TestReporter.boolValue(from: testReport)
+                XCTAssertTrue(hasPassed)
             case .failure(let error):
                 failOnConfigurationError(error)
             }
@@ -237,13 +271,17 @@ private extension Skylark {
         switch configurationService.configuration() {
         case .success(let configuration):
             let initialContextId = self.initialContextId ?? configuration.application.initialContext
+            
             guard let id = initialContextId, let initialContext = configuration.application.contexts[id] else {
                 return .failure(.initialContextNotSpecified)
             }
             let contextManagement = Services.contextManagement(context: initialContext, model: configuration)
-            let stepResolver = Services.stepResolution(contextManagement: contextManagement, model: configuration, testCase: testCase)
-            let executionService = Services.executionService(contextManagement: contextManagement, stepResolver: stepResolver)
-            let dependencies = Dependencies(contextManagementService: contextManagement, executionService: executionService, stepResolutionService: stepResolver)
+            let stepResolver = Services.stepResolution(contextManagement: contextManagement,
+                                                       model: configuration, testCase: testCase)
+            let executionService = Services.executionService(contextManagement: contextManagement,
+                                                             stepResolver: stepResolver)
+            let dependencies = Dependencies(contextManagementService: contextManagement,
+                                            executionService: executionService, stepResolutionService: stepResolver)
             return .success(dependencies)
         case .failure(let error):
             return .failure(error)
@@ -275,11 +313,19 @@ private extension Skylark {
         case .configurationNotProvided:
             errorMessage = "Unable to locate \(configFileName)."
         case .initialContextNotSpecified:
-            errorMessage = "An initial context must be specified by providing a value for key 'initial-context' in your configuration file by by passing the initial context identifier when instantiating the test runner."
+            errorMessage = """
+            An initial context must be specified by providing a value for key 'initial-context'
+            in your configuration file by by passing the initial context identifier when
+            instantiating the test runner.
+            """
         case .parsing(let parsingError):
             errorMessage = "Unable to parse \(configFileName) due to \(parsingError.localizedDescription)."
         case .testCaseNotProvided:
-            errorMessage = "XTestCase instance required to execute tests. This should not occur typically but can be resolved by invoking setTestCase(_:) on the test runner and providing an XCTestCase instance."
+            errorMessage = """
+            XTestCase instance required to execute tests. This should not occur typically but
+            can be resolved by invoking setTestCase(_:) on the test runner and providing an
+            XCTestCase instance.
+            """
         }
         XCTFail(errorMessage)
     }

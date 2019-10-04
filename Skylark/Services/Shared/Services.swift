@@ -33,8 +33,13 @@ struct Services {
     }
 
     /// Executes feature files comprising scenarios.
-    static func executionService(contextManagement: ContextManagementService, stepResolver: StepResolutionService) -> ExecutionService {
+    static func executionService(contextManagement: ContextManagementService,
+                                 stepResolver: StepResolutionService) -> ExecutionService {
         return ScenarioExecutionService(contextManagement: contextManagement, stepResolver: stepResolver)
+    }
+    
+    static func logging() -> LoggingService {
+        return DefaultLoggingService()
     }
     
     /// Resolves resources including configuration files.
@@ -43,7 +48,8 @@ struct Services {
     }
     
     /// Resolves written steps to executable actions.
-    static func stepResolution(contextManagement: ContextManagementService, model: SkylarkConfiguration, testCase: XCTestCase) -> StepResolutionService {
+    static func stepResolution(contextManagement: ContextManagementService,
+                               model: SkylarkConfiguration, testCase: XCTestCase) -> StepResolutionService {
         return DefaultStepResolutionService(contextManager: contextManagement, model: model, testCase: testCase)
     }
     

@@ -1,6 +1,6 @@
 //
 //  SetUp.swift
-//  Argos
+//  Skylark
 //
 //  Created by Ross Butler on 6/10/19.
 //

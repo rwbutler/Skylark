@@ -29,7 +29,8 @@ class ScenarioExecutionService: ExecutionService {
             setUp(for: .simulatorReset)
         }
         setUp(for: .eachFeature)
-        let scenarioResults: [ScenarioReport] = execute(scenarios: feature.scenarios, additionalTags: feature.tags, retryCount: retryCount)
+        let scenarioResults: [ScenarioReport] = execute(scenarios: feature.scenarios,
+                                                        additionalTags: feature.tags, retryCount: retryCount)
         tearDown(for: .eachFeature)
         let overallResult = featureResult(from: scenarioResults)
         let report =  FeatureReport(feature: feature, scenarioReports: scenarioResults, result: overallResult)
@@ -54,7 +55,9 @@ class ScenarioExecutionService: ExecutionService {
             guard let tagExpression = self.tagExpression(),
                 let conditionalExecutionService = ScenarioTagsService(tagExpression: tagExpression) else {
                     let result: ScenarioResult = .notExecuted(.unrecognizedTagExpression)
-                    results.append(ScenarioReport.scenario(scenario, result: result))
+                    let scenarioResult = ScenarioReport.scenario(scenario, result: result)
+                    results.append(scenarioResult)
+                    TestReporter.report(scenarioReport: scenarioResult)
                     continue
             }
             let scenarioTagExpr = scenario.tagExpression ?? ""
@@ -64,29 +67,40 @@ class ScenarioExecutionService: ExecutionService {
             }
             
             // Check whether the scenario should be executed based on tags.
-            let shouldExecuteSceanrio = conditionalExecutionService.shouldExecuteScenario(tags: scenarioTags)
-            if !shouldExecuteSceanrio {
-                let nonExecutionResult: ScenarioResult = .notExecuted(.tagMismatch(tagExpr: scenarioTagExpr, testRunnerTagExpr: tagExpression))
-                results.append(ScenarioReport.scenario(scenario, result: nonExecutionResult))
+            let shouldExecuteScenario = conditionalExecutionService.shouldExecuteScenario(tags: scenarioTags)
+            if !shouldExecuteScenario {
+                let nonExecutionResult: ScenarioResult = .notExecuted(
+                    .tagMismatch(tagExpr: scenarioTagExpr, testRunnerTagExpr: tagExpression)
+                )
+                let result = ScenarioReport.scenario(scenario, result: nonExecutionResult)
+                results.append(result)
+                TestReporter.report(scenarioReport: result)
                 continue
             }
             
             switch scenario.type {
             case .scenario:
                 let result = scenarioReport(name: scenario.name, scenarioText: scenario.text, retryCount: retryCount)
-                results.append(ScenarioReport.scenario(scenario, result: result))
+                let scenarioResult = ScenarioReport.scenario(scenario, result: result)
+                results.append(scenarioResult)
+                TestReporter.report(scenarioReport: scenarioResult)
             case .scenarioOutline, .scenarioPermutations:
-                let scenarioTexts = outlineParser.scenariosWithExampleSubstitutions(scenario: scenario.text, type: scenario.type)
+                let scenarioTexts = outlineParser.scenariosWithExampleSubstitutions(scenario: scenario.text,
+                                                                                    type: scenario.type)
                 var outlineResults: [ScenarioOutlineResult] = []
                 for scenarioText in scenarioTexts {
                     let result = scenarioReport(name: scenario.name, scenarioText: scenarioText, retryCount: retryCount)
                     outlineResults.append(ScenarioOutlineResult(result: result, scenarioText: scenarioText))
                 }
                 if case .scenarioOutline = scenario.type {
-                    results.append(ScenarioReport.scenarioOutline(scenario, results: outlineResults))
+                    let result = ScenarioReport.scenarioOutline(scenario, results: outlineResults)
+                    results.append(result)
+                    TestReporter.report(scenarioReport: result)
                 }
                 if case .scenarioPermutations = scenario.type {
-                    results.append(ScenarioReport.scenarioPermutations(scenario, results: outlineResults))
+                    let result = ScenarioReport.scenarioPermutations(scenario, results: outlineResults)
+                    results.append(result)
+                    TestReporter.report(scenarioReport: result)
                 }
             }
         }
@@ -102,49 +116,23 @@ class ScenarioExecutionService: ExecutionService {
         let emojiString = Skylark.emojiInOutput ? " 🏃‍♂️\n" : ".\n"
         let steps: [String] = scenarioText.split(separator: "\n").map({ String($0) })
         
-        var previousStep: GherkinStep?
         for step in steps {
             let trimmedStep = step.lowercased().trimmingCharacters(in: CharacterSet.whitespaces)
-            if let previousEvaluable = previousStep {
-                setUp(for: .eachStep)
-                setUp(scenario: scenarioName, step: previousEvaluable.text)
-                let trimmedStep = previousEvaluable.text.trimmingCharacters(in: .whitespacesAndNewlines)
-                let output = "\nRunning step '\(trimmedStep)' in '\(currentContext)' context\(emojiString)"
-                print(output)
-                guard previousEvaluable.evaluable.evaluate() else {
-                    tearDown(for: .eachStep)
-                    tearDown(scenario: scenarioName, step: previousEvaluable.text)
-                    return .failure(.stepFailure(previousEvaluable.text))
-                }
-                tearDown(for: .eachStep)
-                tearDown(scenario: scenarioName, step: previousEvaluable.text)
-                if let eval = evaluable(for: trimmedStep) {
-                    previousStep = GherkinStep(evaluable: eval, text: step)
-                } else {
-                    return .failure(.noMatchingStep(step))
-                }
-            }
             if let eval = evaluable(for: trimmedStep) {
-                previousStep = GherkinStep(evaluable: eval, text: step)
+                let executableStep = GherkinStep(evaluable: eval, text: step)
+                setUp(for: .eachStep)
+                setUp(scenario: scenarioName, step: executableStep.text)
+                let output = "\nRunning step '\(trimmedStep)' in '\(currentContext)' context\(emojiString)"
+                               print(output)
+                let result = executableStep.evaluable.evaluate()
+                tearDown(for: .eachStep)
+                tearDown(scenario: scenarioName, step: executableStep.text)
+                if !result {
+                    return .failure(.stepFailure(executableStep.text))
+                }
             } else {
                 return .failure(.noMatchingStep(step))
             }
-        }
-        
-        if let previousEvaluable = previousStep {
-            setUp(for: .eachStep)
-            setUp(scenario: scenarioName, step: previousEvaluable.text)
-            let trimmedStep = previousEvaluable.text.trimmingCharacters(in: .whitespacesAndNewlines)
-            let output = "\nRunning step '\(trimmedStep)' in '\(currentContext)' context\(emojiString)"
-            print(output)
-            guard previousEvaluable.evaluable.evaluate() else {
-                tearDown(for: .eachStep)
-                tearDown(scenario: scenarioName, step: previousEvaluable.text)
-                return .failure(.stepFailure(previousEvaluable.text))
-            }
-            tearDown(for: .eachStep)
-            tearDown(scenario: scenarioName, step: previousEvaluable.text)
-            return .success
         }
         return .success
     }
@@ -201,7 +189,8 @@ class ScenarioExecutionService: ExecutionService {
             }
             if let step = step {
                 let nonPrefixedStep = stepWithoutGherkinPrefix(step: step)
-                if case let .step(scenarioName, stepText) = $0.trigger, scenarioName == name, (stepText == step || stepText == nonPrefixedStep) {
+                if case let .step(scenarioName, stepText) = $0.trigger, scenarioName == name,
+                    (stepText == step || stepText == nonPrefixedStep) {
                     return true
                 }
             }

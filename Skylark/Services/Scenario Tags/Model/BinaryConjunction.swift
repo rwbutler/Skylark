@@ -1,9 +1,9 @@
 //
 //  Conjunction.swift
-//  Argos
+//  Skylark
 //
 //  Created by Ross Butler on 6/10/19.
-//  Copyright © 2019 Argos. All rights reserved.
+//  Copyright © 2019 Ross Butler. All rights reserved.
 //
 
 import Foundation

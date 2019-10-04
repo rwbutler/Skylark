@@ -19,4 +19,9 @@ struct SkylarkConfiguration: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.application = try container.decode(Application.self, forKey: .application)
     }
+    
+    init(app: Application) {
+        self.application = app
+    }
+    
 }

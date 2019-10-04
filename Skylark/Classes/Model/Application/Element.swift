@@ -35,7 +35,8 @@ struct Element: Codable {
         type = try container.decode(ElementType.self, forKey: .type)
     }
     
-    init(identifier: Identifier, discovery: Discovery = .none, isTransient: Bool = false, name: Name, type: ElementType) {
+    init(identifier: Identifier, discovery: Discovery = .none, isTransient: Bool = false,
+         name: Name, type: ElementType) {
         self.discovery = discovery
         self.identifier = identifier
         self.isTransient = isTransient

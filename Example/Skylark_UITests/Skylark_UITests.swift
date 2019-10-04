@@ -12,7 +12,7 @@ import Skylark
 class Tests: XCTestCase {
     
     /// Obtain an instance of the test runner
-    lazy var testRunner = Skylark.testRunner(testCase: self)
+    lazy var testRunner = Skylark.testRunner(testCase: self, context: "Main")
     
     func testFromFeatureFile() {
         // Execute scenarios from feature file

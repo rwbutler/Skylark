@@ -45,7 +45,8 @@ public struct Context: Codable {
         }
         self.elements = elementMap
         
-        guard let steps = try container.decodeIfPresent([String: [String: ParameterisedStepType]].self, forKey: .steps) else {
+        guard let steps = try container.decodeIfPresent([String: [String: ParameterisedStepType]].self, forKey: .steps)
+            else {
             self.steps = nil
             return
         }

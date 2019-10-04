@@ -12,13 +12,19 @@ class DefaultStepResolutionService: StepResolutionService {
     
     /// Identifier of the current screen in the application.
     private var context: ContextInstance
+    
     private let contextManager: ContextManagementService
+    
     // Registered steps are programmatic rather than from configuration.
     private static var contextualRegisteredSteps: [Context.Identifier: [ParameterisedStepType: Evaluable]] = [:]
+    
     private let model: SkylarkConfiguration
+    
     // Registered steps are programmatic rather than from configuration.
     private static var registeredSteps: [ParameterisedStepType: Evaluable] = [:]
+    
     private var testCase: XCTestCase
+    
     private let timeout: Double = 10.0
     
     init(contextManager: ContextManagementService, model: SkylarkConfiguration, testCase: XCTestCase) {
@@ -30,8 +36,9 @@ class DefaultStepResolutionService: StepResolutionService {
     }
     
     func stepWithoutGherkinPrefix(step: String) -> String {
+        let lowercasedStep = step.lowercased()
         let prefixes = ["given that", "given", "when", "then", "and", "or", "but"]
-        for prefix in prefixes where step.starts(with: prefix) {
+        for prefix in prefixes where lowercasedStep.starts(with: prefix) {
             let stepIndexAfterPrefix = step.index(step.startIndex, offsetBy: prefix.count)
             let stepWithoutPrefix = String(step[stepIndexAfterPrefix..<step.endIndex])
             return stepWithoutPrefix.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -61,7 +68,8 @@ class DefaultStepResolutionService: StepResolutionService {
             manualSteps.merge(dict: stepsForScreen)
         }
         for manualStep in manualSteps.keys {
-            if case .registered(let stepDefinition) = manualStep, isMatch(step: trimmedStep, potentialMatchingStepString: stepDefinition) {
+            if case .registered(let stepDefinition) = manualStep,
+                isMatch(step: trimmedStep, potentialMatchingStepString: stepDefinition) {
                 return manualSteps[manualStep]
             }
         }
@@ -78,7 +86,8 @@ class DefaultStepResolutionService: StepResolutionService {
             if case .existence(let existenceTemplates) = stepForScreen {
                 for existenceTemplate in existenceTemplates {
                     let matchByName = substituteParameter(template: existenceTemplate, substitution: currentScreen.name)
-                    let matchById = substituteParameter(template: existenceTemplate, substitution: currentScreen.identifier)
+                    let matchById = substituteParameter(template: existenceTemplate,
+                                                        substitution: currentScreen.identifier)
                     if isMatch(step: trimmedStep, potentialMatchingStepString: matchByName)
                         || isMatch(step: trimmedStep, potentialMatchingStepString: matchById) {
                         return screenExistence(element: currentScreen)
@@ -90,7 +99,8 @@ class DefaultStepResolutionService: StepResolutionService {
         for elementType in screenElements.keys {
             if let elementsOfType = screenElements[elementType] {
                 let stepsForElementsOfType = steps(elementType: elementType, screen: currentScreen)
-                let potentialMatches = potentialSteps(elements: elementsOfType, parameterisedSteps: stepsForElementsOfType)
+                let potentialMatches = potentialSteps(elements: elementsOfType,
+                                                      parameterisedSteps: stepsForElementsOfType)
                 for potentialMatch in potentialMatches {
                     if isMatch(step: trimmedStep, potentialMatch: potentialMatch) {
                         return evaluable(matchingStep: potentialMatch)
@@ -230,7 +240,8 @@ private extension DefaultStepResolutionService {
             
             // Try multiple identifiers for the element in the event that the identifier provided cannot be found.
             let elemIds = [element.identifier, element.name, element.identifier.capitalized, element.name.capitalized,
-                           element.identifier.lowercased(), element.name.lowercased(), element.identifier.uppercased(), element.name.uppercased()]
+                           element.identifier.lowercased(),
+                           element.name.lowercased(), element.identifier.uppercased(), element.name.uppercased()]
 
             for elementId in elemIds {
                 let elem = query[elementId]
@@ -266,7 +277,8 @@ private extension DefaultStepResolutionService {
             let requiredElementCount = 3
             var foundElementCount = 0
             // Check #`requiredElementCount` randomly-selected elements exist.
-            let elementsRequired = (screenElements.count < requiredElementCount) ? screenElements.count : requiredElementCount
+            let elementsRequired = (screenElements.count < requiredElementCount)
+                ? screenElements.count : requiredElementCount
             while foundElementCount < elementsRequired && !screenElements.isEmpty {
                 let randomElemIdx = Int.random(in: 0 ..< screenElements.count)
                 let randomElement = screenElements[randomElemIdx]
@@ -342,7 +354,9 @@ private extension DefaultStepResolutionService {
             for parameterisedStep in parameterisedSteps {
                 switch parameterisedStep {
                 case .existence(let existenceSteps):
-                    let potentials = existenceSteps.map { PotentialMatchingStep(element: element, interaction: .existence, template: $0) }
+                    let potentials = existenceSteps.map {
+                        PotentialMatchingStep(element: element, interaction: .existence, template: $0)
+                    }
                     result.append(contentsOf: potentials)
                 case .interaction(let interactionSteps):
                     let potentials: [[PotentialMatchingStep]] = interactionSteps.compactMap { x in
@@ -350,7 +364,8 @@ private extension DefaultStepResolutionService {
                             return nil
                         }
                         return x.value.map { interactionStep in
-                            return PotentialMatchingStep(element: element, interaction: interaction, template: interactionStep)
+                            return PotentialMatchingStep(element: element, interaction: interaction,
+                                                         template: interactionStep)
                         }
                     }
                     result.append(contentsOf: potentials.flatMap { $0 })
@@ -363,9 +378,14 @@ private extension DefaultStepResolutionService {
     }
     
     func isMatch(step: String, potentialMatch: PotentialMatchingStep) -> Bool {
-        let matchByName = substituteParameter(template: potentialMatch.template, substitution: potentialMatch.element.name)
-        let matchById = substituteParameter(template: potentialMatch.template, substitution: potentialMatch.element.identifier)
-        if isMatch(step: step, potentialMatchingStepString: matchByName) || isMatch(step: step, potentialMatchingStepString: matchById) {
+        let elementId = potentialMatch.element.identifier
+        let elementName = potentialMatch.element.name
+        let template = potentialMatch.template
+        let matchByName = substituteParameter(template: template, substitution: elementName)
+        let matchById = substituteParameter(template: template, substitution: elementId)
+        let isMatchByName = isMatch(step: step, potentialMatchingStepString: matchByName)
+        let isMatchById = isMatch(step: step, potentialMatchingStepString: matchById)
+        if isMatchByName || isMatchById {
             return true
         }
         return false

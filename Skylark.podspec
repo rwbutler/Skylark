@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
   s.name             = 'Skylark'
-  s.version          = '0.1.0'
+  s.version          = '0.2.0'
   s.summary          = 'Pure Swift BDD testing framework for writing Cucumber scenarios using Gherkin syntax'
-  s.swift_version    = '4.2'
+  s.swift_version    = '5.0'
   s.description      = <<-DESC
   Implementation of Cucumber written in pure Swift using XCTest. Allows the execution of feature files containing scenarios written in Gherkin syntax.
                        DESC

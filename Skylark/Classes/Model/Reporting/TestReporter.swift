@@ -110,60 +110,219 @@ struct TestReporter {
         self.init(scenarioReports: reports, output: output)
     }
     
-    func report() {
-        let reportText = summary()
+    private static func scenarioReports(from testReports: [TestReport]) -> [ScenarioReport] {
+        var allScenarioReports: [ScenarioReport] = []
+        for testReport in testReports {
+            switch testReport {
+            case .feature(let featureReport):
+                allScenarioReports.append(contentsOf: featureReport.scenarioReports)
+            case .scenarios(let scenarioReports):
+                allScenarioReports.append(contentsOf: scenarioReports)
+            }
+        }
+        return allScenarioReports
+    }
+    
+    private static func scenarioResults(from scenarioReports: [ScenarioReport]) -> [ScenarioResult] {
+        var scenarioResults: [ScenarioResult] = []
+        for scenarioReport in scenarioReports {
+            switch scenarioReport {
+            case .scenario(let report):
+                scenarioResults.append(report.result)
+            case .scenarioOutline(_, let results), .scenarioPermutations(_, let results):
+                scenarioResults.append(contentsOf: results.map { $0.result })
+            }
+        }
+        return scenarioResults
+    }
+    
+    static func boolValue(from testReport: TestReport) -> Bool {
+        switch testReport {
+        case .feature(let report):
+            return report.result.boolValue
+        case .scenarios(let reports):
+            return boolValue(from: reports)
+        }
+    }
+    
+    static func boolValue(from scenarioReports: [ScenarioReport]) -> Bool {
+        let results = scenarioResults(from: scenarioReports).map { $0.boolValue }
+        return !results.contains(false)
+    }
+    
+    static func scenarioResults(from testReports: [TestReport]) -> [ScenarioResult] {
+        let reports = scenarioReports(from: testReports)
+        return scenarioResults(from: reports)
+    }
+    
+    static func report(reports: [TestReport], outputs: [Skylark.Output] = [.print]) {
+        let results = scenarioResults(from: reports)
+        let statistics = ReportStatistics(results: results)
+        var summaryText = "\nSummary\n"
+        if statistics.numberOfScenariosPassed > 0 {
+            summaryText += "\t\(statistics.stringRepresentationScenariosPassed())\n"
+        }
+        if statistics.numberOfScenariosFlaky > 0 {
+            summaryText += "\t\(statistics.stringRepresentationScenariosFlaky())\n"
+        }
+        if statistics.numberOfScenariosFailed > 0 {
+            summaryText += "\t\(statistics.stringRepresentationScenariosFailed())\n"
+        }
+        if statistics.numberOfScenariosNotExecuted > 0 {
+            summaryText += "\t\(statistics.stringRepresentationScenariosNotExecuted())\n"
+        }
+        if statistics.totalNumberOfScenarios > 1 {
+            summaryText += "\n\tTotal: \(statistics.totalNumberOfScenarios) scenarios.\n"
+        }
+        report(text: summaryText, outputs: outputs)
+    }
+    
+    static func report(scenarioReport: ScenarioReport, outputs: [Skylark.Output] = [.print]) {
+        let scenarioName: String
+        let scenarioResult: ScenarioResult
+        switch scenarioReport {
+        case .scenario(let scenario, let result):
+            scenarioName = scenario.name
+            scenarioResult = result
+        case .scenarioOutline(let scenario, let results):
+            scenarioName = scenario.name
+            scenarioResult = scenarioOutlineResult(from: results)
+        case .scenarioPermutations(let scenario, let results):
+            scenarioName = scenario.name
+            scenarioResult = scenarioOutlineResult(from: results)
+        }
+        let reportText = "Test result: '\(scenarioName)' \(stringRepresentation(scenarioResult))\n"
+        report(text: reportText, outputs: outputs)
+    }
+    
+    static func stringRepresentation(_ result: ScenarioResult) -> String {
+        let emojiInOutput = Skylark.emojiInOutput
+        let successString = emojiInOutput ? "passed ✅" : "passed."
+        let flakyString = emojiInOutput ? "is flaky ⚠️" : "is flaky."
+        let failureString = emojiInOutput ? "failed ❌" : "failed."
+        let notExecutedString = emojiInOutput ? "was not executed 🙅🏻‍♂️" : "was not executed."
+        switch result {
+        case .success:
+            return successString
+        case .flaky:
+            return flakyString
+        case .failure:
+            return failureString
+        case .notExecuted:
+            return notExecutedString
+        }
+    }
+    
+    static func scenarioOutlineResult(from results: [ScenarioOutlineResult]) -> ScenarioResult {
+        if results.contains(where: { $0.result.isFailure() }) {
+            return .failure(.generic)
+        }
+        if results.contains(where: { $0.result.isFlaky() }) {
+            return .flaky([])
+        }
+        if results.contains(where: { $0.result.isNotExecuted() }) {
+            return .notExecuted(.generic)
+        }
+        return .success
+    }
+    
+    static func report(text: String, outputs: [Skylark.Output]) {
         for channel in outputs {
             switch channel {
             case .debugPrint:
-                debugPrint(summary())
+                debugPrint(text)
             case .print:
-                print(summary())
+                print(text)
             case .slack(let webHookURL):
-                reportUsingSlack(webHookURL: webHookURL, message: reportText)
+                reportUsingSlack(webHookURL: webHookURL, message: text)
             }
+        }
+    }
+    
+    func report() {
+        let summaryText = summary()
+        type(of: self).report(text: summaryText, outputs: outputs)
+    }
+    
+    static func stringRepresentationScenariosPassed(numberPassed: Int, percentage: Double) -> String {
+        let emojiString = Skylark.emojiInOutput ? " ✅" : "."
+        if numberPassed <= 1 {
+            return "Passed\(emojiString)"
+        } else {
+            let percentagePassed = TestReporter.stringRepresentationToOneDecimalPlace(percentage)
+            return "\(numberPassed) (\(percentagePassed)%) passed\(emojiString)"
         }
     }
     
     func stringRepresentationScenariosPassed() -> String {
         let emojiString = Skylark.emojiInOutput ? " ✅" : "."
-        if totalNumberOfScenarios == 1 {
+        if totalNumberOfScenarios <= 1 {
             return "Passed\(emojiString)"
         } else {
-            let percentagePassed = stringRepresentationToOneDecimalPlace(percentageScenariosPassed)
+            let percentagePassed = TestReporter.stringRepresentationToOneDecimalPlace(percentageScenariosPassed)
             return "\(numberOfScenariosPassed) (\(percentagePassed)%) passed\(emojiString)"
+        }
+    }
+    
+    static func stringRepresentationScenariosFlaky(numberFlaky: Int, percentage: Double) -> String {
+        let emojiString = Skylark.emojiInOutput ? " ⚠️" : "."
+        if numberFlaky <= 1 {
+            return "Flaky\(emojiString)"
+        } else {
+            let percentageFlaky = TestReporter.stringRepresentationToOneDecimalPlace(percentage)
+            return "\(numberFlaky) (\(percentageFlaky)%) flaky\(emojiString)"
         }
     }
     
     func stringRepresentationScenariosFlaky() -> String {
         let emojiString = Skylark.emojiInOutput ? " ⚠️" : "."
-        if totalNumberOfScenarios == 1 {
+        if totalNumberOfScenarios <= 1 {
             return "Flaky\(emojiString)"
         } else {
-            let percentageFlaky = stringRepresentationToOneDecimalPlace(percentageScenariosFlaky)
+            let percentageFlaky = TestReporter.stringRepresentationToOneDecimalPlace(percentageScenariosFlaky)
             return "\(numberOfScenariosFlaky) (\(percentageFlaky)%) flaky\(emojiString)"
+        }
+    }
+    
+    static func stringRepresentationScenariosFailed(numberFailed: Int, percentage: Double) -> String {
+        let emojiString = Skylark.emojiInOutput ? " ❌" : "."
+        if numberFailed <= 1 {
+            return "Failed\(emojiString)"
+        } else {
+            let percentageFailed = TestReporter.stringRepresentationToOneDecimalPlace(percentage)
+            return "\(numberFailed) (\(percentageFailed)%) failed\(emojiString)"
         }
     }
     
     func stringRepresentationScenariosFailed() -> String {
         let emojiString = Skylark.emojiInOutput ? " ❌" : "."
-        if totalNumberOfScenarios == 1 {
+        if totalNumberOfScenarios <= 1 {
             return "Failed\(emojiString)"
         } else {
-            let percentageFailed = stringRepresentationToOneDecimalPlace(percentageScenariosFailed)
+            let percentageFailed = TestReporter.stringRepresentationToOneDecimalPlace(percentageScenariosFailed)
             return "\(numberOfScenariosFailed) (\(percentageFailed)%) failed\(emojiString)"
+        }
+    }
+    
+    static func stringRepresentationScenariosNotExecuted(numberNotExecuted: Int, percentage: Double) -> String {
+        let emojiString = Skylark.emojiInOutput ? " 🙅🏻‍♂️" : "."
+        if numberNotExecuted <= 1 {
+            return "Not executed\(emojiString)"
+        } else {
+            return "\(numberNotExecuted) not executed\(emojiString)"
         }
     }
     
     func stringRepresentationScenariosNotExecuted() -> String {
         let emojiString = Skylark.emojiInOutput ? " 🙅🏻‍♂️" : "."
-        if totalNumberOfScenarios == 1 {
+        if totalNumberOfScenarios <= 1 {
             return "Not executed\(emojiString)"
         } else {
             return "\(numberOfScenariosNotExecuted) not executed\(emojiString)"
         }
     }
     
-    func stringRepresentationToOneDecimalPlace(_ value: Double) -> String {
+    static func stringRepresentationToOneDecimalPlace(_ value: Double) -> String {
         return String(format: "%.1f", value)
     }
     
@@ -190,13 +349,14 @@ struct TestReporter {
         return failures
     }
     
-    func failureReport() -> String? {
-        guard let scenarioReports = self.scenarioReports else {
+    func failureReport(from scenarioReports: [ScenarioReport]) -> String? {
+        var summaryText = "\nFailures\n"
+        let failureReports = self.failureReports(scenarioReports)
+        guard !failureReports.isEmpty else {
             return nil
         }
-        var summaryText = "\nFailures\n"
-        for failureReport in failureReports(scenarioReports) {
-            summaryText += "\t\(failureReport.scenario.name) failed because:\n"
+        for failureReport in failureReports {
+            summaryText += "\t'\(failureReport.scenario.name)' failed because:\n"
             for failure in failureReport.failureResults {
                 summaryText += "\t\t-> \(failure.description)\n"
             }
@@ -206,7 +366,8 @@ struct TestReporter {
     
     func summary() -> String {
         var summaryText = ""
-        if let failureReport = self.failureReport() {
+        if let scenarioReports = self.scenarioReports,
+            let failureReport = self.failureReport(from: scenarioReports) {
             summaryText += failureReport
         }
         summaryText += "\nSummary\n"
@@ -231,13 +392,13 @@ struct TestReporter {
 
 extension TestReporter {
     func assert() {
-        XCTAssert(boolValue)
+        XCTAssertTrue(boolValue)
     }
 }
 
 private extension TestReporter {
     
-    private func reportUsingSlack(webHookURL: URL, message: String) {
+    private static func reportUsingSlack(webHookURL: URL, message: String) {
         let request = slackRequest(webHookURL: webHookURL, message: message)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let httpStatus = response as? HTTPURLResponse, let data = data, error == nil else {
@@ -256,7 +417,7 @@ private extension TestReporter {
         task.resume()
     }
     
-    private func slackRequest(webHookURL: URL, message: String) -> URLRequest {
+    private static func slackRequest(webHookURL: URL, message: String) -> URLRequest {
         var request = URLRequest(url: webHookURL)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"

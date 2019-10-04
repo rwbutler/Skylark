@@ -22,11 +22,14 @@ enum FeatureResult {
             return true
         case .notExecuted(.unrecognizedTagExpression):
             return false
+        case .notExecuted(.generic):
+            return true
         }
     }
 }
 
 enum NonExecutionReason {
+    case generic
     case tagMismatch(tagExpr: String, testRunnerTagExpr: String)
     case unrecognizedTagExpression
 }

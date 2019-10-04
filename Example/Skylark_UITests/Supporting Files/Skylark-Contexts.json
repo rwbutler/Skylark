@@ -1,0 +1,211 @@
+{
+    "contexts": {
+        "home": {
+            "name": "Home",
+            "elements": [{
+                "name": "find product",
+                "id": "home-header-view-search-button",
+                "type": "buttons"
+            }, {
+                "name": "browse",
+                "id": "home-header-view-browse-button",
+                "type": "buttons"
+            }, {
+                "name": "homepage tile section",
+                "id": "home-tiles-view-tile-0",
+                "type": "buttons"
+            }, {
+                "name": "trolley",
+                "id": "tab-bar-trolley",
+                "type": "tabs"
+            }, {
+                "name": "featured products section",
+                "id": "hooklogic",
+                "type": "elements"
+            }, {
+                "name": "popular categories section",
+                "id": "popularcategory",
+                "type": "elements"
+            }, {
+                "name": "More",
+                "id": "More",
+                "type": "tabs"
+            }]
+        },
+        "browse": {
+            "name": "Browse",
+            "elements": [{
+                "name": "technology",
+                "id": "technology",
+                "type": "cells"
+            }, {
+                "name": "home and garden",
+                "id": "home-and-garden",
+                "type": "cells"
+            }, {
+                "name": "baby and nursery",
+                "id": "baby-and-nursery",
+                "type": "cells"
+            }, {
+                "name": "toys",
+                "id": "toys",
+                "type": "cells"
+            }, {
+                "name": "sports and leisure",
+                "id": "sports-and-leisure",
+                "type": "cells"
+            }, {
+                "name": "health and beauty",
+                "id": "health-and-beauty",
+                "type": "cells"
+            }, {
+                "name": "clothing",
+                "id": "clothing",
+                "type": "cells"
+            }, {
+                "name": "jewellery and watches",
+                "id": "jewellery-and-watches",
+                "type": "cells"
+            }, {
+                "name": "gifts",
+                "id": "gifts",
+                "type": "cells"
+            }, {
+                "name": "search option",
+                "id": "search-text-field",
+                "type": "text-fields"
+            }]
+        },
+        "search": {
+            "name": "Search",
+            "elements": [{
+                "name": "cancel",
+                "id": "cancel-button",
+                "type": "buttons"
+            }, {
+                "name": "home",
+                "id": "tab-bar-home",
+                "type": "tabs"
+            }, {
+                "name": "search option",
+                "id": "search-text-field",
+                "type": "text-fields"
+            }, {
+                "name": "search",
+                "id": "search-text-field",
+                "type": "text-fields"
+            }]
+        },
+        "web-checkout": {
+            "name": "Web Checkout",
+            "elements": [{
+                "name": "saved-cards",
+                "id": "Your saved cards",
+                "type": "text"
+            }]
+        },
+        "help": {
+            "name": "Help",
+            "elements": [{
+                "name": "Help!",
+                "id": "Help!",
+                "type": "text"
+            }]
+        },
+        "cookie-policy": {
+            "name": "Cookie Policy",
+            "elements": [{
+                "name": "Our Cookie Policy",
+                "id": "Our Cookie Policy",
+                "type": "text"
+            }]
+        },
+        "privacy-policy": {
+            "name": "Privacy Policy",
+            "elements": [{
+                "name": "Sainsbury's Group Privacy Policy",
+                "id": "Sainsbury's Group Privacy Policy",
+                "type": "text"
+            }]
+        },
+        "terms-and-conditions": {
+            "name": "Terms & Conditions",
+            "elements": [{
+                "name": "Terms & Conditions",
+                "id": "Terms & Conditions",
+                "type": "text"
+            }]
+        },
+        "legal": {
+            "name": "Legal",
+            "elements": [{
+                "name": "Cookie Policy",
+                "id": "Cookie Policy",
+                "type": "text"
+            }, {
+                "name": "Privacy Policy",
+                "id": "Privacy Policy",
+                "type": "text"
+            }, {
+                "name": "Terms & Conditions",
+                "id": "Terms & Conditions",
+                "type": "text"
+            }]
+        },
+        "wishlists": {
+            "name": "Wishlists",
+            "elements": [{
+                "name": "add wishlist",
+                "id": "add-wishlist",
+                "type": "buttons"
+            }, {
+                "name": "edit",
+                "id": "Edit",
+                "type": "buttons"
+            }]
+        },
+        "trolley": {
+            "name": "Trolley",
+            "elements": [{
+                "name": "Apple Pay",
+                "id": "apple-pay-button",
+                "transient": true,
+                "type": "buttons"
+            }]
+        },
+        "more": {
+            "name": "More",
+            "elements": [{
+                "name": "Help",
+                "id": "Help",
+                "type": "cells"
+            }, {
+                "name": "Legal",
+                "id": "Legal",
+                "type": "cells"
+            }]
+        },
+        "pnpl": {
+            "name": "Pay Now Or Pay Later",
+            "elements": [{
+                "name": "Pay Now",
+                "id": "pay-now-button",
+                "type": "buttons"
+            }, {
+                "name": "Apple Pay",
+                "id": "apple-pay-button",
+                "transient": true,
+                "type": "buttons"
+            }]
+        },
+        "pdp": {
+            "name": "Product Detail Page",
+            "elements": [{
+                "name": "Apple Pay",
+                "id": "apple-pay-button",
+                "transient": true,
+                "type": "buttons"
+            }]
+        }
+    }
+}

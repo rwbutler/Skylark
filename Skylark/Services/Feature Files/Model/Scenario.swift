@@ -30,4 +30,5 @@ struct Scenario {
         self.text = text
         self.type = type
     }
+    
 }

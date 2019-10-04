@@ -27,7 +27,8 @@ class FeatureFileParsingService: ParsingService {
             let featureTags = tags(from: featureDefinition)
             let text = featureText(from: featureDefinition)
             let tagExpression = self.tagExpression(from: featureDefinition)
-            let feature = Feature(name: name, tags: featureTags, scenarios: scenarios, tagExpression: tagExpression, text: text)
+            let feature = Feature(name: name, tags: featureTags, scenarios: scenarios,
+                                  tagExpression: tagExpression, text: text)
             return .success(feature)
         }
         return .failure(.unexpectedFormat(nil))

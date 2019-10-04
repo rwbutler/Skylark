@@ -9,7 +9,7 @@ import Foundation
 
 public class DefaultResourceResolutionService: ResourceResolutionService {
     
-    /// Checks the current bundle last.
+    /// Searches all bundles for the first matching resource checking the test bundle last.
     func url(forResource resourceName: String?, withExtension resourceExtension: String?) -> URL? {
         let allBundles = Bundle.allBundles
         let currentBundle = Bundle(for: type(of: self))
@@ -19,6 +19,24 @@ public class DefaultResourceResolutionService: ResourceResolutionService {
             if let resourceURL = bundle.url(forResource: resourceName, withExtension: resourceExtension) {
                 return resourceURL
             }
+        }
+        return nil
+    }
+    
+    /// Convenience method for quickly retriving resources in the app's bundle.
+    func urlInAppBundle(forResource resourceName: String?, withExtension resourceExtension: String?) -> URL? {
+        let testBundle = Bundle.main
+        if let resourceURL = testBundle.url(forResource: resourceName, withExtension: resourceExtension) {
+            return resourceURL
+        }
+        return nil
+    }
+    
+    /// Convenience method for quickly retrieving resources in the framework bundle.
+    func urlInTestBundle(forResource resourceName: String?, withExtension resourceExtension: String?) -> URL? {
+        let testBundle = Bundle(for: type(of: self))
+        if let resourceURL = testBundle.url(forResource: resourceName, withExtension: resourceExtension) {
+            return resourceURL
         }
         return nil
     }

@@ -1,0 +1,164 @@
+{
+    "steps": {
+        "buttons": {
+            "existence": [
+                "$PARAMETER is displayed",
+                "$PARAMETER is shown",
+                "the $PARAMETER button is displayed",
+                "the $PARAMETER button is shown",
+                "the $PARAMETER is displayed",
+                "the $PARAMETER is shown",
+                "a $PARAMETER button is displayed",
+                "a $PARAMETER button is shown"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap $PARAMETER",
+                    "i tap the $PARAMETER",
+                    "i tap the $PARAMETER icon",
+                    "i tap the $PARAMETER button",
+                    "i tap the $PARAMETER link",
+                    "tap the $PARAMETER button",
+                    "then tap the $PARAMETER button",
+                    "the $PARAMETER button is tapped",
+                    "the $PARAMETER is tapped",
+                    "$PARAMETER is tapped"
+                ]
+            }
+        },
+        "cells": {
+            "existence": [
+                "$PARAMETER cell is displayed",
+                "$PARAMETER cell is shown",
+                "the $PARAMETER cell is displayed",
+                "the $PARAMETER cell is shown"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap on $PARAMETER cell",
+                    "i tap the $PARAMETER cell",
+                    "i tap on the $PARAMETER cell"
+                ]
+            }
+        },
+        "elements": {
+            "existence": [
+                "$PARAMETER is displayed",
+                "$PARAMETER is shown",
+                "the $PARAMETER element is displayed",
+                "the $PARAMETER element is shown",
+                "the $PARAMETER is displayed",
+                "the $PARAMETER is shown",
+                "the $PARAMETER category heading is displayed"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap $PARAMETER",
+                    "i tap the $PARAMETER",
+                    "i tap the $PARAMETER element",
+                    "the $PARAMETER element is tapped",
+                    "the $PARAMETER is tapped",
+                    "$PARAMETER is tapped"
+                ]
+            }
+        },
+        "keyboards": {
+            "existence": [
+                "$PARAMETER is displayed",
+                "$PARAMETER is shown",
+                "the $PARAMETER field is displayed",
+                "the $PARAMETER field is shown",
+                "the $PARAMETER is displayed",
+                "the $PARAMETER is shown"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap $PARAMETER",
+                    "i tap the $PARAMETER",
+                    "i tap the $PARAMETER field",
+                    "the $PARAMETER field is tapped",
+                    "the $PARAMETER is tapped",
+                    "$PARAMETER is tapped",
+                    "the $PARAMETER is active",
+                    "the $PARAMETER field is active"
+                ]
+            }
+        },
+        "tabs": {
+            "existence": [
+                "$PARAMETER tab is displayed",
+                "$PARAMETER tab is shown",
+                "the $PARAMETER tab is displayed",
+                "the $PARAMETER tab is shown"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap $PARAMETER tab",
+                    "i tap the $PARAMETER tab",
+                    "the $PARAMETER tab is tapped",
+                    "$PARAMETER tab is tapped"
+                ]
+            }
+        },
+        "text": {
+            "existence": [
+                "$PARAMETER is displayed",
+                "$PARAMETER is shown",
+                "the $PARAMETER field is displayed",
+                "the $PARAMETER field is shown",
+                "the $PARAMETER is displayed",
+                "the $PARAMETER is shown",
+                "the $PARAMETER category heading is displayed"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap the $PARAMETER text",
+                    "i tap on the $PARAMETER text"
+                ]
+            }
+        },
+        "text-fields": {
+            "existence": [
+                "$PARAMETER is displayed",
+                "$PARAMETER is shown",
+                "the $PARAMETER field is displayed",
+                "the $PARAMETER field is shown",
+                "the $PARAMETER is displayed",
+                "the $PARAMETER is shown"
+            ],
+            "interaction": {
+                "tap": [
+                    "i tap $PARAMETER",
+                    "i tap the $PARAMETER",
+                    "i tap the $PARAMETER field",
+                    "the $PARAMETER field is tapped",
+                    "the $PARAMETER is tapped",
+                    "$PARAMETER is tapped",
+                    "the $PARAMETER is active",
+                    "the $PARAMETER field is active"
+                ]
+            }
+        },
+        "pages": {
+            "existence": [
+                "i navigate to the $PARAMETER page",
+                "i navigate to the $PARAMETER screen",
+                "i navigate to the $PARAMETERpage",
+                "i am on the $PARAMETERpage",
+                "i am on the $PARAMETER page",
+                "i am on $PARAMETER",
+                "$PARAMETER is displayed",
+                "the $PARAMETER is displayed",
+                "the $PARAMETER page is displayed",
+                "the $PARAMETERpage is displayed",
+                "the $PARAMETER is shown",
+                "the $PARAMETER page is shown",
+                "the $PARAMETER screen is shown",
+                "the $PARAMETERpage is shown",
+                "the $PARAMETER screen is displayed",
+                "i am on the $PARAMETER screen",
+                "i am on $PARAMETER screen"
+            ]
+        }
+    }
+}

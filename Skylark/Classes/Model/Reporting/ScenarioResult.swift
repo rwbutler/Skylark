@@ -12,12 +12,37 @@ enum ScenarioResult {
     case success
     case flaky(_ results: [ScenarioResult])
     case failure(_ failure: ScenarioFailure)
+    
+    func isSuccess() -> Bool {
+        return self == .success
+    }
+    
+    func isFlaky() -> Bool {
+        return self == .flaky([])
+    }
+    
+    func isFailure() -> Bool {
+        return self == .failure(.stepFailure(""))
+    }
+    
+    func isNotExecuted() -> Bool {
+        return self == .notExecuted(.unrecognizedTagExpression)
+    }
+    
+    var boolValue: Bool {
+        switch self {
+        case .notExecuted(.generic), .notExecuted(.tagMismatch), .success, .flaky:
+            return true
+        case .notExecuted(.unrecognizedTagExpression), .failure:
+            return false
+        }
+    }
 }
 
 extension ScenarioResult: Equatable {
     static func == (lhs: ScenarioResult, rhs: ScenarioResult) -> Bool {
         switch (lhs, rhs) {
-        case (.success, .success), (.flaky, .flaky), (.failure, .failure):
+        case (.success, .success), (.flaky, .flaky), (.failure, .failure), (.notExecuted, .notExecuted):
             return true
         default:
             return false

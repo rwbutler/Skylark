@@ -19,4 +19,5 @@ struct SkylarkConfigurationWrapper: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.skylark = try container.decode(SkylarkConfiguration.self, forKey: .skylark)
     }
+    
 }

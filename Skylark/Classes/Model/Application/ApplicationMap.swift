@@ -8,10 +8,16 @@
 import Foundation
 
 struct ApplicationMap: Codable {
+    
     let map: [Context.Identifier: [ContextTransition]]
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         map = try container.decode([Context.Identifier: [ContextTransition]].self)
     }
+    
+    init(map: [Context.Identifier: [ContextTransition]]) {
+        self.map = map
+    }
+    
 }

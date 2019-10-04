@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		137954B922E9FFBD0071F36E /* Skylark2.json in Resources */ = {isa = PBXBuildFile; fileRef = 137954B022E9F53E0071F36E /* Skylark2.json */; };
+		137954BA22E9FFC00071F36E /* Skylark-Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 137954B222E9F55D0071F36E /* Skylark-Map.json */; };
+		137954BB22E9FFC30071F36E /* Skylark-Steps.json in Resources */ = {isa = PBXBuildFile; fileRef = 137954B422E9F56C0071F36E /* Skylark-Steps.json */; };
+		137954BC22E9FFC60071F36E /* Skylark-Contexts.json in Resources */ = {isa = PBXBuildFile; fileRef = 137954B622E9F5990071F36E /* Skylark-Contexts.json */; };
 		13E09BA721701C6A00E5796E /* Skylark_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E09BA621701C6A00E5796E /* Skylark_UITests.swift */; };
 		13E09BAF21701CAC00E5796E /* Skylark.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13E09BAE21701CAC00E5796E /* Skylark.framework */; };
 		13E09BBE2170B4C800E5796E /* Main.feature in Resources */ = {isa = PBXBuildFile; fileRef = 13E09B922170138000E5796E /* Main.feature */; };
@@ -30,6 +34,10 @@
 
 /* Begin PBXFileReference section */
 		0CC4EBEB0150147889C7C003 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		137954B022E9F53E0071F36E /* Skylark2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Skylark2.json; sourceTree = "<group>"; };
+		137954B222E9F55D0071F36E /* Skylark-Map.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Skylark-Map.json"; sourceTree = "<group>"; };
+		137954B422E9F56C0071F36E /* Skylark-Steps.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Skylark-Steps.json"; sourceTree = "<group>"; };
+		137954B622E9F5990071F36E /* Skylark-Contexts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Skylark-Contexts.json"; sourceTree = "<group>"; };
 		13E09B77217002B600E5796E /* Pods_Skylark_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Skylark_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13E09B79217002C100E5796E /* Pods_Skylark_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Skylark_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13E09B7B217002E800E5796E /* Skylark.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Skylark.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +117,10 @@
 		13E09BB42170B26400E5796E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				137954B022E9F53E0071F36E /* Skylark2.json */,
+				137954B222E9F55D0071F36E /* Skylark-Map.json */,
+				137954B422E9F56C0071F36E /* Skylark-Steps.json */,
+				137954B622E9F5990071F36E /* Skylark-Contexts.json */,
 				13E09BB62170B27A00E5796E /* Page Definitions */,
 				13E09BB52170B27100E5796E /* Feature Files */,
 			);
@@ -269,10 +281,9 @@
 			};
 			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Skylark" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -292,8 +303,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				137954BA22E9FFC00071F36E /* Skylark-Map.json in Resources */,
 				13E09BC22170C0FB00E5796E /* Main.screen in Resources */,
+				137954B922E9FFBD0071F36E /* Skylark2.json in Resources */,
 				13E09BBE2170B4C800E5796E /* Main.feature in Resources */,
+				137954BB22E9FFC30071F36E /* Skylark-Steps.json in Resources */,
+				137954BC22E9FFC60071F36E /* Skylark-Contexts.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

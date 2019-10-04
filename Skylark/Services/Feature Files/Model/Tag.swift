@@ -7,5 +7,4 @@
 
 import Foundation
 
-// swiftlint:disable:next type_name
 typealias Tag = String

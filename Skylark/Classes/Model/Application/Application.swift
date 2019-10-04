@@ -40,4 +40,12 @@ struct Application: Codable {
         }
         self.steps = Dictionary(stepTuples)
     }
+    
+    init(contexts: Contexts, map: ApplicationMap?, steps: Steps?) {
+        self.contexts = contexts
+        self.initialContext = nil
+        self.map = map ?? ApplicationMap(map: [:])
+        self.steps = steps ?? [:]
+    }
+    
 }

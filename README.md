@@ -18,6 +18,7 @@ To learn more about how to use Skylark, take a look at the table of contents bel
 - [Author](#author)
 - [License](#license)
 - [Additional Software](#additional-software)
+	- [Controls](#controls)
 	- [Frameworks](#frameworks)
 	- [Tools](#tools)
 
@@ -294,6 +295,14 @@ For more information [see here](https://github.com/Carthage/Carthage#quick-start
 Skylark is available under the MIT license. See the [LICENSE file](./LICENSE) for more info.
 
 ## Additional Software
+
+### Controls
+
+* [AnimatedGradientView](https://github.com/rwbutler/AnimatedGradientView) - Powerful gradient animations made simple for iOS.
+
+|[AnimatedGradientView](https://github.com/rwbutler/AnimatedGradientView) |
+|:-------------------------:|
+|[![AnimatedGradientView](https://raw.githubusercontent.com/rwbutler/AnimatedGradientView/master/docs/images/animated-gradient-view-logo.png)](https://github.com/rwbutler/AnimatedGradientView) 
 
 ### Frameworks
 

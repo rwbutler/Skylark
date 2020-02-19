@@ -176,11 +176,23 @@ There are currently three way of setting the initial context for your app:
 * __Initial Context:__ This is the state Skylark believes that your app is in when the app is first started. Therefore, if the first screen shown in your app is the home screen and you have defined a context named `home` as part of your [context definitions](#context-definitions) then this the screen Skylark will think is being shown to the user when the app is initially launched. TODO: What happens if the initial context id doesn't match any context definition?
 
 ## FAQs
-### Missing initial context
-`Skylark.testRunner(context: "home")`
-Or via Skylark.json
+### Skylark Outputs An Error
+#### An initial context must be specified
+If an error message is emitted indicating that an initial context must be specified this indicates that Skylark doesn't know which context to expect the app to be in when the tests start running. There are three means of specifying an initial context currently:
 
-### ETC
+1. When initializing the test runner as follows:
+`‌lazy var testRunner = Skylark.testRunner(testCase: self, context: "Home")`
+2. By invoking `setInitialContext` e.g. `testRunner.setInitialContext("Home")`
+3. As part of a `Skylark.json` configuration file by providing the context identifier as the value to the `initial-context` key e.g. 
+```swift
+{
+    "skylark": {
+        "application": {
+            "initial-context": "Home",
+            ...
+```
+
+### Etc
 To get started import the Skylark and XCTest frameworks into your UI testing target, create an XCTestCase subclass as usual and instantiate an instance of the test runner. Ensure that your feature file has been added to your UI test bundle with the file extension `.feature` then invoke `test(featureFile:)` to run your scenarios.
 
 ```swift

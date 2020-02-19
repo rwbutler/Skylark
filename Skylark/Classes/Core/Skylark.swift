@@ -269,15 +269,14 @@ private extension Skylark {
     /// Configures the framework with an XCTestCase for executing 
     private func configure(with testCase: XCTestCase) -> Result<Dependencies, ConfigurationError> {
         switch configurationService.configuration() {
-        case .success(let configuration):
-            let initialContextId = self.initialContextId ?? configuration.application.initialContext
-            
-            guard let id = initialContextId, let initialContext = configuration.application.contexts[id] else {
+        case .success(let config):
+            let initialContextId = self.initialContextId ?? config.application.initialContext
+            guard let initialContext = config.context(for: initialContextId) else {
                 return .failure(.initialContextNotSpecified)
             }
-            let contextManagement = Services.contextManagement(context: initialContext, model: configuration)
+            let contextManagement = Services.contextManagement(context: initialContext, model: config)
             let stepResolver = Services.stepResolution(contextManagement: contextManagement,
-                                                       model: configuration, testCase: testCase)
+                                                       model: config, testCase: testCase)
             let executionService = Services.executionService(contextManagement: contextManagement,
                                                              stepResolver: stepResolver)
             let dependencies = Dependencies(contextManagementService: contextManagement,

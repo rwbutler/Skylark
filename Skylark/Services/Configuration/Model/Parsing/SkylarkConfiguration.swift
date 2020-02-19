@@ -24,4 +24,12 @@ struct SkylarkConfiguration: Codable {
         self.application = app
     }
     
+    /// Resolves a context identifier to a `Context` model object.
+    func context(for id: Context.Identifier?) -> Context? {
+        let contextKeys = application.contexts.keys
+        guard let id = id, let contextKey = contextKeys.first(where: { id.lowercased() == $0.lowercased() }) else {
+            return nil
+        }
+        return application.contexts[contextKey]
+    }
 }

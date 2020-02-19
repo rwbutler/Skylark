@@ -11,6 +11,16 @@
 
 Skylark provides automated acceptance testing for iOS apps by translating feature files written in [Gherkin](https://cucumber.io/docs/gherkin/) into Xcode UI tests driven by the [XCTest framework](https://developer.apple.com/documentation/xctest).
 
+To learn more about how to use Skylark, take a look at the table of contents below:
+
+- [Features](#features)
+- [Glossary](#glossary)
+- [Author](#author)
+- [License](#license)
+- [Additional Software](#additional-software)
+	- [Frameworks](#frameworks)
+	- [Tools](#tools)
+
 ## Features
 
 - [x] Execute feature files containing scenarios written using Gherkin
@@ -270,6 +280,10 @@ github "rwbutler/Skylark"
 From the macOS Terminal run `carthage update --platform iOS` to build the framework then drag `Skylark.framework` into your Xcode project.
 
 For more information [see here](https://github.com/Carthage/Carthage#quick-start).
+
+# Glossary
+- Context: A context is a model representing the state of the app at a point in time. Most of the time a context represents the state of the UI for a screen in an app although it needn't necessarily represent an entire screen.
+- Initial context: The initial context is the context representing the state of the app when the test launches.
 
 ## Author
 

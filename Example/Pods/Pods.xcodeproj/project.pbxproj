@@ -1230,7 +1230,9 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 0.2.0;
 				MODULEMAP_FILE = "Target Support Files/Skylark/Skylark.modulemap";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rwbutler.Skylark;
 				PRODUCT_MODULE_NAME = Skylark;
 				PRODUCT_NAME = Skylark;
 				SDKROOT = iphoneos;
@@ -1266,7 +1268,9 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 0.2.0;
 				MODULEMAP_FILE = "Target Support Files/Skylark/Skylark.modulemap";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rwbutler.Skylark;
 				PRODUCT_MODULE_NAME = Skylark;
 				PRODUCT_NAME = Skylark;
 				SDKROOT = iphoneos;
@@ -1300,11 +1304,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
+				MARKETING_VERSION = 0.2.0;
 				MODULEMAP_FILE = "Target Support Files/Pods-Skylark_Example/Pods-Skylark_Example.modulemap";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rwbutler.Pods-Skylark-Example";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1436,11 +1441,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
+				MARKETING_VERSION = 0.2.0;
 				MODULEMAP_FILE = "Target Support Files/Pods-Skylark_Example/Pods-Skylark_Example.modulemap";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rwbutler.Pods-Skylark-Example";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;

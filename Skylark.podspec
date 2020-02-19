@@ -12,5 +12,5 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/rwbutler/Skylark.git', :tag => s.version.to_s }
   s.ios.deployment_target = '9.3'
   s.framework = 'XCTest'
-  s.source_files = 'Classes/**/*.swift','Services/**/*.swift'
+  s.source_files = 'Skylark/**/*.swift'
 end
